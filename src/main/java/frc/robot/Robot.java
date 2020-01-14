@@ -8,6 +8,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -24,6 +26,9 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+  private XboxController controller;
+  private Wheels wheels;
+
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -33,6 +38,8 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    controller = new XboxController(0);
+    wheels = new Wheels(3, 8, 9, 10);
   }
 
   /**
@@ -86,6 +93,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    // on the kitbot, needs to be eased in
+    // just an issue with these motors?
+    wheels.drive(controller.getY(Hand.kLeft), controller.getY(Hand.kRight));
+    SmartDashboard.putString("[left joystick] ", "value: " + controller.getY(Hand.kLeft));
+    SmartDashboard.putString("[right joystick] ", "value: " + controller.getY(Hand.kRight));
   }
 
   /**
