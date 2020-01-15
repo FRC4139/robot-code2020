@@ -7,10 +7,15 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation; 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import com.ctre.phoenix;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -23,6 +28,10 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  private XboxController controller;
+  private double contTrigAxis;  
+  private double contXAxis;
+  private Wheels wheels;  
 
   /**
    * This function is run when the robot is first started up and should be
@@ -33,6 +42,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    wheels = new Wheels(1, 8, 9, 5); 
   }
 
   /**
@@ -94,4 +104,10 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
   }
+  
+  public void robotControl(){
+    
+  }
+  
+
 }
