@@ -8,6 +8,8 @@
 //TESTING MY BRANCH lk
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -29,6 +31,9 @@ public class Robot extends TimedRobot {
 
   private XboxController controller;
   private Wheels wheels;
+  private float currentSpeed = 0;
+  private WPI_TalonSRX testTalon; 
+  
 
   /**
    * This function is run when the robot is first started up and should be
@@ -41,6 +46,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     controller = new XboxController(0);
     wheels = new Wheels(3, 8, 9, 10);
+    testTalon = new WPI_TalonSRX(12);
   }
 
   /**
@@ -106,5 +112,20 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+    if (controller.getAButtonReleased()) {
+      currentSpeed += 0.01;
+    } 
+    if (controller.getBButtonReleased()) {
+      currentSpeed -= 0.01;
+    } 
+    if (controller.getXButtonReleased()) {
+      currentSpeed += 0.1;
+    } 
+    if (controller.getYButtonReleased()) {
+      currentSpeed -= 0.1;
+    } 
+
+    testTalon.set(currentSpeed);
+
   }
 }
