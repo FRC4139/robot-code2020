@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
   private double contTrigAxis;  
   private double contXAxis;
   private Wheels wheels;  
-
+  
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -96,6 +96,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    
   }
 
   /**
@@ -106,6 +107,63 @@ public class Robot extends TimedRobot {
   }
   
   public void robotControl(){
+    //for buttons (drums, hook, inverse, draw bridge respectively)
+    if(controller.getAButton())
+    {
+      
+    }
+
+    if(controller.getBButton())
+    {
+
+    }
+
+    if(controller.getXButton())
+    {
+    
+    }
+
+    if(controller.getYButton())
+    {
+      //reverse wheels
+      wheels.inverse();
+    }
+
+    //left trigger check
+    if(controller.getTriggerAxis(Hand.kLeft))
+    {
+
+    }
+
+    //right trigger check
+    if(controller.getTriggerAxis(Hand.kRight))
+    {
+
+    }
+
+    //left bumper check
+    if(controller.getBumper(Hand.kLeft))
+    {
+
+    }
+
+    //right bumper check
+    if(controller.getBumper(Hand.kRight))
+    {
+
+    }
+
+    //left joystick check
+    if(controller.getStickButton(Hand.kLeft))
+    {
+
+    }
+
+    //right joystick check
+    if(controller.getStickButton(Hand.kRight))
+    {
+      
+    }
     
   }
   
