@@ -8,6 +8,10 @@
 //TESTING MY BRANCH lk
 package frc.robot;
 
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -29,7 +33,9 @@ public class Robot extends TimedRobot {
 
   private XboxController controller;
   private Wheels wheels;
-
+  private WPI_TalonSRX shooterTalon; 
+  private int shooterTalonChannel = 0;
+  private float shooterTalonPredeterminedSpeed = 0.0f; 
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -41,6 +47,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     controller = new XboxController(0);
     wheels = new Wheels(3, 8, 9, 10);
+    shooterTalon = new WPI_TalonSRX(shooterTalonChannel);
   }
 
   /**
@@ -99,6 +106,15 @@ public class Robot extends TimedRobot {
     wheels.drive(controller.getY(Hand.kLeft), controller.getY(Hand.kRight));
     SmartDashboard.putString("[left joystick] ", "value: " + controller.getY(Hand.kLeft));
     SmartDashboard.putString("[right joystick] ", "value: " + controller.getY(Hand.kRight));
+
+    // shooter code. proceeds if right hand trigger is at least 10% pressed
+    if (controller.getTriggerAxis(Hand.kRight) > 0.1) {
+      //code to shoot goes inside here - we want a talon to spin constantly at a predetermined speed. 
+      shooterTalon.set(shooterTalonPredeterminedSpeed);
+    } else {
+      //otherwise we want to keep the shooter talon at a speed of 0
+      shooterTalon.set(0); 
+    }
   }
 
   /**
