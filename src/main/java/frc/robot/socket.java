@@ -1,5 +1,5 @@
   
-package net.ultra03.WebsocketClientTest;
+//package net.ultra03.WebsocketClientTest;
 
 import java.io.BufferedReader;
 import java.io.IOException;
