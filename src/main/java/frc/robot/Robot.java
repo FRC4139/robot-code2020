@@ -9,10 +9,6 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -34,14 +30,8 @@ public class Robot extends TimedRobot {
 
   private XboxController controller;
   private Wheels wheels;
-<<<<<<< Updated upstream
-  private float currentSpeed = 0;
-  private WPI_TalonSRX testTalon; 
-  
-=======
   private WPI_TalonSRX testTalon;
   private float currentSpeed = 0.0f; 
->>>>>>> Stashed changes
 
   /**
    * This function is run when the robot is first started up and should be
@@ -53,13 +43,8 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     controller = new XboxController(0);
-<<<<<<< Updated upstream
-    wheels = new Wheels(3, 8, 9, 10);
-    testTalon = new WPI_TalonSRX(14);
-=======
     //wheels = new Wheels(3, 8, 9, 10);
     testTalon = new WPI_TalonSRX(10);
->>>>>>> Stashed changes
   }
 
   /*
@@ -154,10 +139,6 @@ public class Robot extends TimedRobot {
     } 
 
     testTalon.set(currentSpeed);
-<<<<<<< Updated upstream
-
-=======
     SmartDashboard.putNumber("speed", currentSpeed);
->>>>>>> Stashed changes
   }
 }
