@@ -99,6 +99,8 @@ public class Robot extends TimedRobot {
     wheels.drive(controller.getY(Hand.kLeft), controller.getY(Hand.kRight));
     SmartDashboard.putString("[left joystick] ", "value: " + controller.getY(Hand.kLeft));
     SmartDashboard.putString("[right joystick] ", "value: " + controller.getY(Hand.kRight));
+    SmartDashboard.putString("Position of mag encoder", "value: " + wheels.getRotations("fL"));
+  
   }
 
   /**
