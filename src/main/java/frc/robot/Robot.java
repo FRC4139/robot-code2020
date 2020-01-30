@@ -29,7 +29,7 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   private XboxController controller;
-  private Wheels wheels;
+  //private Wheels wheels;
   private WPI_TalonSRX testTalon;
   private float currentSpeed = 0.0f; 
 
@@ -114,7 +114,7 @@ public class Robot extends TimedRobot {
     } 
 
     testTalon.set(currentSpeed);
-    wheels.drive(controller.getY(Hand.kLeft), controller.getY(Hand.kRight));
+    //wheels.drive(controller.getY(Hand.kLeft), controller.getY(Hand.kRight));
     SmartDashboard.putString("[left joystick] ", "value: " + controller.getY(Hand.kLeft));
     SmartDashboard.putString("[right joystick] ", "value: " + controller.getY(Hand.kRight));
     SmartDashboard.putNumber("speed", currentSpeed);
@@ -125,20 +125,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-    if (controller.getAButtonReleased()) {
-      currentSpeed += 0.01;
-    } 
-    if (controller.getBButtonReleased()) {
-      currentSpeed -= 0.01;
-    } 
-    if (controller.getXButtonReleased()) {
-      currentSpeed += 0.1;
-    } 
-    if (controller.getYButtonReleased()) {
-      currentSpeed -= 0.1;
-    } 
-
-    testTalon.set(currentSpeed);
-    SmartDashboard.putNumber("speed", currentSpeed);
+    
   }
 }
