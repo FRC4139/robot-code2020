@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 public class Wheels {
 
     private WPI_TalonSRX frontLeft, backLeft, frontRight, backRight;
+    // tank drive
     private DifferentialDrive wheels;
 
     public Wheels(int fL, int bL, int fR, int bR) {
@@ -18,7 +19,10 @@ public class Wheels {
         frontRight = new WPI_TalonSRX(fR);
         backRight = new WPI_TalonSRX(bR);
 
-        frontLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        frontLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+        backRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+        backLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+        frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
         wheels = new DifferentialDrive(new SpeedControllerGroup(frontLeft, backLeft), new SpeedControllerGroup(frontRight, backRight));
     }
 
@@ -29,11 +33,19 @@ public class Wheels {
 
     public int getRotations(String location) { 
         if (location == "fL") {
-            int temp = frontLeft.getSelectedSensorPosition();
-            return temp;
+            return frontLeft.getSelectedSensorPosition();
+        }
+        if (location == "bL") {
+            return backLeft.getSelectedSensorPosition();
+        }
+        if (location == "fR") {
+            return frontRight.getSelectedSensorPosition();
+        }
+        if (location == "bR") {
+            return backRight.getSelectedSensorPosition();
         }
 
-        return 0;
+        return 404;
 
     }
 
