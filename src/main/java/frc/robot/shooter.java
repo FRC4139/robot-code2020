@@ -2,17 +2,17 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-public class flyWheel
+public class shooter
 {
-    private WPI_TalonSRX fly;
+    private WPI_TalonSRX shoot;
 
-    public flyWheel(int p1)
+    public shooter(int p1)
     {
-        fly = new WPI_TalonSRX(p1);
+        shoot = new WPI_TalonSRX(p1);
     }
 
-    public void flyRun(double val)
+    public void shootRun(double val)
     {
-        fly.set(val);
+        shoot.set(val);
     }
 }
