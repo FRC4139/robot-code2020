@@ -8,6 +8,7 @@
 //TESTING MY BRANCH lk
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.*;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -45,6 +46,7 @@ public class Robot extends TimedRobot {
     controller = new XboxController(0);
     //wheels = new Wheels(3, 8, 9, 10);
     testTalon = new WPI_TalonSRX(10);
+    testTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
   }
 
   /**
@@ -113,11 +115,11 @@ public class Robot extends TimedRobot {
       currentSpeed -= 0.1;
     } 
     testTalon.set(currentSpeed);
-    wheels.drive(controller.getY(Hand.kLeft), controller.getY(Hand.kRight));
+    //wheels.drive(controller.getY(Hand.kLeft), controller.getY(Hand.kRight));
     SmartDashboard.putString("[left joystick] ", "value: " + controller.getY(Hand.kLeft));
     SmartDashboard.putString("[right joystick] ", "value: " + controller.getY(Hand.kRight));
     // br = talon on CAN 10
-    SmartDashboard.putString("Position of mag encoder", "position (4096 units per revolution): " + wheels.getRotations("bR"));
+    SmartDashboard.putString("Position of mag encoder", "position (4096 units per revolution): " + testTalon.getSelectedSensorPosition());
   
   }
 
