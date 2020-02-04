@@ -8,6 +8,8 @@
 //TESTING MY BRANCH lk
 package frc.robot;
 
+//import java.io.Console;
+
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.*;
 
@@ -16,6 +18,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.
+//import jdk.nashorn.internal.runtime.Debug;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,8 +34,9 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private WPI_TalonSRX testTalon;
+  private WPI_TalonSRX encoderTalon;
   private XboxController controller;
-  private Wheels wheels;
+  //private Wheels wheels;
   private float currentSpeed = 0.0f; 
 
   /**
@@ -45,8 +50,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     controller = new XboxController(0);
     //wheels = new Wheels(3, 8, 9, 10);
-    testTalon = new WPI_TalonSRX(10);
-    testTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+    testTalon = new WPI_TalonSRX(3);
+    encoderTalon = new WPI_TalonSRX(8);
+    encoderTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
   }
 
   /**
@@ -114,13 +120,19 @@ public class Robot extends TimedRobot {
     if (controller.getYButtonReleased()) {
       currentSpeed -= 0.1;
     } 
+    if (controller.getBumperPressed(Hand.kRight)) {
+      encoderTalon.setSelectedSensorPosition(0);
+      
+    }
     testTalon.set(currentSpeed);
     //wheels.drive(controller.getY(Hand.kLeft), controller.getY(Hand.kRight));
     SmartDashboard.putString("[left joystick] ", "value: " + controller.getY(Hand.kLeft));
-    SmartDashboard.putString("[right joystick] ", "value: " + controller.getY(Hand.kRight));
+    //SmartDashboard.putString("[right joystick] ", "value: " + controller.getY(Hand.kRight));
     // br = talon on CAN 10
-    SmartDashboard.putString("Position of mag encoder", "position (4096 units per revolution): " + testTalon.getSelectedSensorPosition());
-  
+    
+    //SmartDashboard.putString("Position of mag encoder (4096 u/rev)","value: " + encoderTalon.getSelectedSensorPosition());
+    //SmartDashboard.putNumber("key", encoderTalon.getSelectedSensorPosition());
+    SmartDashboard.putNumber("revolutions", encoderTalon.getSelectedSensorPosition() / 4096.0);
   }
 
   /**
