@@ -10,12 +10,23 @@ public class controller{
     private Conveyor conveyor;
     private int intConvPort1, intConvPort2;
     private double convDriveVal;
+    private double driveVal;
     private drawBridge drawbridge;
     private int drumPWMChannel;
     private double drumVal;
     private Intake intake;
     private int intakePort;
     private int wheelPort1, wheelPort2, wheelPort3, wheelPort4;
+    private hookExtension hook;
+    private int hookPort;
+    private shooter shooter;
+    private int shooterVal;
+    private flyWheel colorWheel;
+    private int colorPort;
+    private double colorWheelVal;
+    private colorArm colorArm;
+    private int servoPWMChannel;
+    private double upServoVal, downServoVal;
 
     public void controllerInit()
     {
@@ -29,13 +40,24 @@ public class controller{
         //drumPWMChannel = ;
         //drumVal = ;
         //intakePort = ;
+        //hookPort = ;
+        //shooterVal = ;
+        //colorPort = ;
+        //colorWheelVal = ;
+        //driveVal = ;
+        //servoPWMChannel = ;
+        //upServoVal = ;
+        //downServoVal = ;
         drawbridge = new drawBridge(drumPWMChannel);
         intake = new Intake(intakePort);
+        hook = new hookExtension(hookPort);
+        colorWheel = new flyWheel(colorPort);
+        colorArm = new colorArm(servoPWMChannel);
     }
     //conveyer
     if(controller1.getAButtonPressed())
     {
-        conveyor.drive()
+        conveyor.drive(driveVal);
     }
     //drum in 
     if(controller1.getYButtonPressed())
@@ -53,13 +75,13 @@ public class controller{
     //1st controller right bumper; hook up (that sounds weird)
     if(controller1.getBumperPressed(Hand.kRight))
     {
-
+        hook.raise();
     }
 
     //1st controller left bumper; hook down
     if(controller1.getBumperPressed(Hand.kLeft))
     {
-
+        hook.lower();
     }
     //inverse wheels
     if(controller1.getXButtonPressed())
@@ -74,23 +96,23 @@ public class controller{
     // right trigger; controls shooter
     if(controller1.getTriggerAxis(Hand.kRight)>.1)
     {
-        
+        shooter.shootRun(shooterVal);
     }
     //2nd controller 
     //servo up
     if(controller2.getBButtonPressed())
     {
-
+        colorArm.setVal(upServoVal);
     }
 
     if(controller2.getXButtonPressed())
     {
-
+        
     }
-    //fly wheel, servo down
+    //servo down
     if(controller2.getAButtonPressed())
     {
-
+        colorArm.setVal(downServoVal);
     }
 
     if(controller2.getYButton())
@@ -117,7 +139,7 @@ public class controller{
     //left trigger; color spinner left
     if(controller2.getTriggerAxis(hand.kLeft)>.1)
     {
-
+        colorWheel.flyRun(colorWheelVal);
     }
 }
 }
