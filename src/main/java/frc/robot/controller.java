@@ -4,30 +4,50 @@ public class controller{
 
     //main controller
     private XboxController controller1;
-
+    private Wheels wheels;
     //controller for color spinner
     private XboxController controller2;
+    private Conveyor conveyor;
+    private int intConvPort1, intConvPort2;
+    private double convDriveVal;
+    private drawBridge drawbridge;
+    private int drumPWMChannel;
+    private double drumVal;
+    private Intake intake;
+    private int intakePort;
+    private int wheelPort1, wheelPort2, wheelPort3, wheelPort4;
 
     public void controllerInit()
     {
+        wheels = new Wheels(wheelPort1, wheelPort2, wheelPort3, wheelPort4);
         controller1 = new XboxController(0);
         controller2 = new XboxController(1);
-
+        conveyor = new Conveyor(intConvPort1,intConvPort2);
+        //convDriveVal = ;
+        //intConvPort1 = ;
+        //intConvPort2 = ;
+        //drumPWMChannel = ;
+        //drumVal = ;
+        //intakePort = ;
+        drawbridge = new drawBridge(drumPWMChannel);
+        intake = new Intake(intakePort);
     }
     //conveyer
     if(controller1.getAButtonPressed())
     {
-
+        conveyor.drive()
     }
     //drum in 
     if(controller1.getYButtonPressed())
     {
-
+        //drumVal = ;
+        drawbridge.SetVal(drumVal);
     }
     //drum out
     if(controller1.getBButtonPressed())
     {
-
+        //drumVal = ;
+        drawbridge.SetVal(drumVal);
     }
     
     //1st controller right bumper; hook up (that sounds weird)
@@ -44,17 +64,17 @@ public class controller{
     //inverse wheels
     if(controller1.getXButtonPressed())
     {
-        
+        wheels.inverse();
     }
     //left trigger; intake
     if(controller1.getTriggerAxis(Hand.kLeft)>.1)
     {
-
+        intake.drive(intakeVal);
     }
     // right trigger; controls shooter
     if(controller1.getTriggerAxis(Hand.kRight)>.1)
     {
-
+        
     }
     //2nd controller 
     //servo up
