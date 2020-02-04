@@ -8,6 +8,8 @@
 //TESTING MY BRANCH lk
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.*;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -26,9 +28,10 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-
+  private WPI_TalonSRX testTalon;
   private XboxController controller;
   private Wheels wheels;
+  private float currentSpeed = 0.0f; 
 
   /**
    * This function is run when the robot is first started up and should be
@@ -40,7 +43,8 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     controller = new XboxController(0);
-    wheels = new Wheels(3, 8, 9, 10);
+    //wheels = new Wheels(3, 8, 9, 10);
+    testTalon = new WPI_TalonSRX(10);
   }
 
   /**
@@ -96,6 +100,19 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     // on the kitbot, needs to be eased in
     // just an issue with these motors?
+    if (controller.getAButtonReleased()) {
+      currentSpeed += 0.01;
+    } 
+    if (controller.getBButtonReleased()) {
+      currentSpeed -= 0.01;
+    } 
+    if (controller.getXButtonReleased()) {
+      currentSpeed += 0.1;
+    } 
+    if (controller.getYButtonReleased()) {
+      currentSpeed -= 0.1;
+    } 
+    testTalon.set(currentSpeed);
     wheels.drive(controller.getY(Hand.kLeft), controller.getY(Hand.kRight));
     SmartDashboard.putString("[left joystick] ", "value: " + controller.getY(Hand.kLeft));
     SmartDashboard.putString("[right joystick] ", "value: " + controller.getY(Hand.kRight));
