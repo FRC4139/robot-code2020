@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import edu.wpi.first.wpilibj.AnalogInput;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -31,6 +31,7 @@ public class Robot extends TimedRobot {
   private XboxController controller2;
   private Controller masterController; 
   private Wheels wheels;
+  private final AnalogInput m_ultrasonic = new AnalogInput(0);
 
   /**
    * This function is run when the robot is first started up and should be
@@ -106,7 +107,7 @@ public class Robot extends TimedRobot {
     //SmartDashboard.putString("[left joystick] ", "value: " + controller.getY(Hand.kLeft));
     //SmartDashboard.putString("[right joystick] ", "value: " + controller.getY(Hand.kRight));
     //SmartDashboard.putString("Position of mag encoder", "value: " + wheels.getRotations("fL"));
-  
+    SmartDashboard.putNumber("distance detected",  m_ultrasonic.getValue()*0.125f - 28);
   }
 
   /**
