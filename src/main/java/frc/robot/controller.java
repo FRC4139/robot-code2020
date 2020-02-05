@@ -1,38 +1,41 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
-public class controller{
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+public class Controller{
+    // THE VALUES FOR THE DOUBLES BELOW NEED TO BE CONFIGURED MANUALLY
 
     //main controller
-    private XboxController controller1;
+    //private XboxController controller1;
     private Wheels wheels;
     //controller for color spinner
-    private XboxController controller2;
+    private int intakeVal;
+    //private XboxController controller2;
     private Conveyor conveyor;
     private int intConvPort1, intConvPort2;
     private double convDriveVal;
     private double driveVal;
-    private drawBridge drawbridge;
+    private DrawBridge drawbridge;
     private int drumPWMChannel;
     private double drumVal;
     private Intake intake;
     private int intakePort;
     private int wheelPort1, wheelPort2, wheelPort3, wheelPort4;
-    private hookExtension hook;
+    private HookExtension hook;
     private int hookPort;
-    private shooter shooter;
+    private Shooter shooter;
     private int shooterVal;
-    private flyWheel colorWheel;
+    private ColorWheel colorWheel;
     private int colorPort;
     private double colorWheelVal;
-    private colorArm colorArm;
+    private ColorArm colorArm;
     private int servoPWMChannel;
     private double upServoVal, downServoVal;
 
     public void controllerInit()
     {
         wheels = new Wheels(wheelPort1, wheelPort2, wheelPort3, wheelPort4);
-        controller1 = new XboxController(0);
-        controller2 = new XboxController(1);
+        //controller1 = new XboxController(0);
+        //controller2 = new XboxController(1);
         conveyor = new Conveyor(intConvPort1,intConvPort2);
         //convDriveVal = ;
         //intConvPort1 = ;
@@ -48,14 +51,15 @@ public class controller{
         //servoPWMChannel = ;
         //upServoVal = ;
         //downServoVal = ;
-        drawbridge = new drawBridge(drumPWMChannel);
+        drawbridge = new DrawBridge(drumPWMChannel);
         intake = new Intake(intakePort);
-        hook = new hookExtension(hookPort);
-        colorWheel = new flyWheel(colorPort);
-        colorArm = new colorArm(servoPWMChannel);
+        hook = new HookExtension(hookPort);
+        colorWheel = new ColorWheel(colorPort);
+        colorArm = new ColorArm(servoPWMChannel);
     }
     //conveyer
-    if(controller1.getAButtonPressed())
+    public void Update(XboxController controller1, XboxController controller2) {
+        if (controller1.getAButtonPressed())
     {
         conveyor.drive(driveVal);
     }
@@ -102,7 +106,7 @@ public class controller{
     //servo up
     if(controller2.getBButtonPressed())
     {
-        colorArm.setVal(upServoVal);
+        colorArm.SetVal(upServoVal);
     }
 
     if(controller2.getXButtonPressed())
@@ -112,7 +116,7 @@ public class controller{
     //servo down
     if(controller2.getAButtonPressed())
     {
-        colorArm.setVal(downServoVal);
+        colorArm.SetVal(downServoVal);
     }
 
     if(controller2.getYButton())
@@ -137,9 +141,9 @@ public class controller{
 
     }
     //left trigger; color spinner left
-    if(controller2.getTriggerAxis(hand.kLeft)>.1)
+    if(controller2.getTriggerAxis(Hand.kLeft)>.1)
     {
         colorWheel.flyRun(colorWheelVal);
     }
-}
+    }
 }

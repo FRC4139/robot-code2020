@@ -2,11 +2,11 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-public class flyWheel
+public class ColorWheel
 {
     private WPI_TalonSRX fly;
 
-    public flyWheel(int p1)
+    public ColorWheel(int p1)
     {
         fly = new WPI_TalonSRX(p1);
     }

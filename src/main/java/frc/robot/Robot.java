@@ -27,7 +27,9 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
-  private XboxController controller;
+  private XboxController controller1;
+  private XboxController controller2;
+  private Controller masterController; 
   private Wheels wheels;
 
   /**
@@ -36,10 +38,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    masterController = new Controller();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    controller = new XboxController(0);
+    controller1 = new XboxController(0);
+    controller2 = new XboxController(1);
     wheels = new Wheels(3, 8, 9, 10);
   }
 
@@ -96,10 +100,12 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     // on the kitbot, needs to be eased in
     // just an issue with these motors?
-    wheels.drive(controller.getY(Hand.kLeft), controller.getY(Hand.kRight));
-    SmartDashboard.putString("[left joystick] ", "value: " + controller.getY(Hand.kLeft));
-    SmartDashboard.putString("[right joystick] ", "value: " + controller.getY(Hand.kRight));
-    SmartDashboard.putString("Position of mag encoder", "value: " + wheels.getRotations("fL"));
+
+    wheels.drive(controller1.getY(Hand.kLeft), controller1.getY(Hand.kRight));
+    masterController.Update(controller1, controller2);
+    //SmartDashboard.putString("[left joystick] ", "value: " + controller.getY(Hand.kLeft));
+    //SmartDashboard.putString("[right joystick] ", "value: " + controller.getY(Hand.kRight));
+    //SmartDashboard.putString("Position of mag encoder", "value: " + wheels.getRotations("fL"));
   
   }
 
