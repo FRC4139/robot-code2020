@@ -1,10 +1,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Servo;
-public class colorArm {
+public class DrawBridge {
     private Servo servo;
 
-    public colorArm(int pwmChannel){
+    public DrawBridge(int pwmChannel){
         servo = new Servo(pwmChannel);
     }
     
