@@ -30,7 +30,7 @@ public class Robot extends TimedRobot {
 
   private XboxController controller;
   //private Wheels wheels;
-  private WPI_TalonSRX testTalon;
+  private WPI_TalonSRX testTalon,testTalon2;
   private float currentSpeed = 0.0f; 
 
   /**
@@ -45,6 +45,7 @@ public class Robot extends TimedRobot {
     controller = new XboxController(0);
     //wheels = new Wheels(3, 8, 9, 10);
     testTalon = new WPI_TalonSRX(3);
+    testTalon2 = new WPI_TalonSRX(8);
   }
 
   /*
@@ -114,6 +115,7 @@ public class Robot extends TimedRobot {
     } 
 
     testTalon.set(currentSpeed);
+    testTalon2.set(currentSpeed);
     //wheels.drive(controller.getY(Hand.kLeft), controller.getY(Hand.kRight));
     SmartDashboard.putString("[left joystick] ", "value: " + controller.getY(Hand.kLeft));
     SmartDashboard.putString("[right joystick] ", "value: " + controller.getY(Hand.kRight));
