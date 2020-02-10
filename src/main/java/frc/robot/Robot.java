@@ -8,6 +8,7 @@
 //TESTING MY BRANCH lk
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -31,6 +32,7 @@ public class Robot extends TimedRobot {
   private XboxController controller2;
   private Controller masterController; 
   private Wheels wheels;
+  private DigitalInput limitSwitch;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -45,6 +47,7 @@ public class Robot extends TimedRobot {
     controller1 = new XboxController(0);
     controller2 = new XboxController(1);
     wheels = new Wheels(3, 8, 9, 10);
+    limitSwitch = new DigitalInput(1); // CHANGE TO PROPER LIMIT SWITCH CHANNEL
   }
 
   /**
@@ -106,6 +109,12 @@ public class Robot extends TimedRobot {
     //SmartDashboard.putString("[left joystick] ", "value: " + controller.getY(Hand.kLeft));
     //SmartDashboard.putString("[right joystick] ", "value: " + controller.getY(Hand.kRight));
     //SmartDashboard.putString("Position of mag encoder", "value: " + wheels.getRotations("fL"));
+
+    if(!limitSwitch.get()) {
+      // Run talon normally
+    } else {
+      // Turn talon off
+    }
   
   }
 
