@@ -1,5 +1,5 @@
 # import the necessary packages
-from pyimagesearch.shapedetector import ShapeDetector
+from shapes import ShapeDetector
 import argparse
 import imutils
 import cv2
@@ -10,7 +10,6 @@ ap.add_argument("-i", "--image", required=True,
 	help="path to the input image")
 args = vars(ap.parse_args())
 
-penCV shape detectionPython
 # load the image and resize it to a smaller factor so that
 # the shapes can be approximated better
 image = cv2.imread(args["image"])
