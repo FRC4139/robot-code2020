@@ -14,20 +14,20 @@ public class Controller{
     private int intConvPort1, intConvPort2;
     private double convDriveVal;
     private double driveVal;
-    private DrawBridge drawbridge;
+    //private DrawBridge drawbridge;
     private int drumPWMChannel;
     private double drumVal;
     private Intake intake;
     private int intakePort;
     private int wheelPort1, wheelPort2, wheelPort3, wheelPort4;
-    private HookExtension hook;
+    //private HookExtension hook;
     private int hookPort;
     private Shooter shooter;
     private int shooterVal;
     private ColorWheel colorWheel;
     private int colorPort;
     private double colorWheelVal;
-    private ColorArm colorArm;
+    //private ColorArm colorArm;
     private int servoPWMChannel;
     private double upServoVal, downServoVal;
 
@@ -51,11 +51,11 @@ public class Controller{
         //servoPWMChannel = ;
         //upServoVal = ;
         //downServoVal = ;
-        drawbridge = new DrawBridge(drumPWMChannel);
+      //  drawbridge = new DrawBridge(drumPWMChannel);
         intake = new Intake(intakePort);
-        hook = new HookExtension(hookPort);
+      //  hook = new HookExtension(hookPort);
         colorWheel = new ColorWheel(colorPort);
-        colorArm = new ColorArm(servoPWMChannel);
+       // colorArm = new ColorArm(servoPWMChannel);
     }
     //conveyer
     public void Update(XboxController controller1, XboxController controller2) {
@@ -67,25 +67,25 @@ public class Controller{
     if(controller1.getYButtonPressed())
     {
         //drumVal = ;
-        drawbridge.SetVal(drumVal);
+        //drawbridge.SetVal(drumVal);
     }
     //drum out
     if(controller1.getBButtonPressed())
     {
         //drumVal = ;
-        drawbridge.SetVal(drumVal);
+        //drawbridge.SetVal(drumVal);
     }
     
     //1st controller right bumper; hook up (that sounds weird)
     if(controller1.getBumperPressed(Hand.kRight))
     {
-        hook.raise();
+        //hook.raise();
     }
 
     //1st controller left bumper; hook down
     if(controller1.getBumperPressed(Hand.kLeft))
     {
-        hook.lower();
+        //hook.lower();
     }
     //inverse wheels
     if(controller1.getXButtonPressed())
@@ -106,7 +106,7 @@ public class Controller{
     //servo up
     if(controller2.getBButtonPressed())
     {
-        colorArm.SetVal(upServoVal);
+       // colorArm.SetVal(upServoVal);
     }
 
     if(controller2.getXButtonPressed())
@@ -116,7 +116,7 @@ public class Controller{
     //servo down
     if(controller2.getAButtonPressed())
     {
-        colorArm.SetVal(downServoVal);
+    //    colorArm.SetVal(downServoVal);
     }
 
     if(controller2.getYButton())
