@@ -108,7 +108,7 @@ public class Robot extends TimedRobot {
     //SmartDashboard.putString("[left joystick] ", "value: " + controller.getY(Hand.kLeft));
     //SmartDashboard.putString("[right joystick] ", "value: " + controller.getY(Hand.kRight));
     //SmartDashboard.putString("Position of mag encoder", "value: " + wheels.getRotations("fL"));
-    SmartDashboard.putNumber("distance detected",  m_ultrasonic.getValue()*0.125f);
+    SmartDashboard.putNumber("distance detected",  m_ultrasonic.getValue()*0.125f/2.54f);
   }
 
   /**
