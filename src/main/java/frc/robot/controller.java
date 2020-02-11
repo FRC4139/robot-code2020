@@ -3,7 +3,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 public class Controller{
     // THE VALUES FOR THE DOUBLES BELOW NEED TO BE CONFIGURED MANUALLY
-
+    //DELETED CONVEYOR; USE THIS CLASS
     //main controller
     //private XboxController controller1;
     private Wheels wheels;
