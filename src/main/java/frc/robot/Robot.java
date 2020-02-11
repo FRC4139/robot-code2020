@@ -97,7 +97,7 @@ public class Robot extends TimedRobot {
   /**
    * This function is called periodically during operator control.
    */
-  @Override
+  @Override  
   public void teleopPeriodic() {
     // on the kitbot, needs to be eased in
     // just an issue with these motors?
@@ -113,6 +113,10 @@ public class Robot extends TimedRobot {
     if (controller.getYButtonReleased()) {
       currentSpeed -= 0.1;
     } 
+
+    if (controller.getBumperReleased(Hand.kRight)) {
+      currentSpeed = 0;
+    }
 
     testTalon.set(currentSpeed);
     testTalon2.set(currentSpeed);
