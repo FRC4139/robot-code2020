@@ -8,6 +8,10 @@
 //TESTING MY BRANCH lk
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -32,6 +36,7 @@ public class Robot extends TimedRobot {
   private Controller masterController; 
   private Wheels wheels;
 
+  private AHRS ahrs; 
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -45,6 +50,25 @@ public class Robot extends TimedRobot {
     controller1 = new XboxController(0);
     controller2 = new XboxController(1);
     wheels = new Wheels(3, 8, 9, 10);
+
+    try {
+      /***********************************************************************
+       * navX-MXP: - Communication via RoboRIO MXP (SPI, I2C) and USB. - See
+       * http://navx-mxp.kauailabs.com/guidance/selecting-an-interface.
+       * 
+       * navX-Micro: - Communication via I2C (RoboRIO MXP or Onboard) and USB. - See
+       * http://navx-micro.kauailabs.com/guidance/selecting-an-interface.
+       * 
+       * VMX-pi: - Communication via USB. - See
+       * https://vmx-pi.kauailabs.com/installation/roborio-installation/
+       * 
+       * Multiple navX-model devices on a single robot are supported.
+       ************************************************************************/
+      ahrs = new AHRS(SPI.Port.kMXP);
+    } catch (RuntimeException ex) {
+      DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
+    }
+    ahrs.calibrate();
   }
 
   /**
@@ -98,9 +122,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    // on the kitbot, needs to be eased in
-    // just an issue with these motors?
+    //much more data can be read. use ahrs.method(); 
+    SmartDashboard.putString("gyro val", "val: " + ahrs.getAngle());
 
+    //is the following line taken care of in Controller.java ??
     wheels.drive(controller1.getY(Hand.kLeft), controller1.getY(Hand.kRight));
     masterController.Update(controller1, controller2);
     //SmartDashboard.putString("[left joystick] ", "value: " + controller.getY(Hand.kLeft));
