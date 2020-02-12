@@ -3,6 +3,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.SPI;
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.ColorMatch;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 public class Controller{
     // THE VALUES FOR THE DOUBLES BELOW NEED TO BE CONFIGURED MANUALLY
@@ -32,6 +34,7 @@ public class Controller{
     private double colorWheelVal;
     private AHRS ahrs; 
     private AnalogInput m_ultrasonic;
+    private ColorSensor colorSensor; 
     //private ColorArm colorArm;
     //private int servoPWMChannel;
     //private double upServoVal, downServoVal;
@@ -47,6 +50,7 @@ public class Controller{
         wheels = new Wheels(wheelPort1, wheelPort2, wheelPort3, wheelPort4);
         controller1 = new XboxController(0);
         controller2 = new XboxController(1);
+        colorSensor = new ColorSensor();
         //conveyor = new Conveyor(intConvPort1,intConvPort2);
         //convDriveVal = ;
         //intConvPort1 = ;
@@ -80,6 +84,9 @@ public class Controller{
 
         //get value from the ultrasonic sensor mounted in the front of the robot
         double ultrasonicReading = getUltraSonicReading();
+
+        //get value from the color sensor 
+        String detectedColor = colorSensor.ReturnColor();
 
         //logic code below
         wheels.drive(controller1.getY(Hand.kLeft), controller1.getY(Hand.kRight));
