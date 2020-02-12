@@ -4,8 +4,8 @@ package frc.robot;
 //import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.*;
 import java.lang.Math;
 
 public class Wheels {
@@ -20,6 +20,8 @@ public class Wheels {
         frontRight = new WPI_TalonSRX(fR);
         backRight = new WPI_TalonSRX(bR);
         inverseState = false;
+        frontLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+        backRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
         wheels = new DifferentialDrive(new SpeedControllerGroup(frontLeft, backLeft), new SpeedControllerGroup(frontRight, backRight));
     }
 
@@ -28,7 +30,10 @@ public class Wheels {
             int temp = frontLeft.getSelectedSensorPosition();
             return temp;
         }
-
+        if (location == "bR") {
+            int temp = backRight.getSelectedSensorPosition();
+            return temp;
+        }
         return 0;
 
     }
