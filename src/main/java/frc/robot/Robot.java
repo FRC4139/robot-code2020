@@ -119,7 +119,7 @@ public class Robot extends TimedRobot {
     }
 
     testTalon.set(currentSpeed);
-    testTalon2.set(currentSpeed);
+    testTalon2.set(-currentSpeed);
     //wheels.drive(controller.getY(Hand.kLeft), controller.getY(Hand.kRight));
     SmartDashboard.putString("[left joystick] ", "value: " + controller.getY(Hand.kLeft));
     SmartDashboard.putString("[right joystick] ", "value: " + controller.getY(Hand.kRight));
