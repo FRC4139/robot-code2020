@@ -25,14 +25,17 @@ public class Wheels {
         wheels = new DifferentialDrive(new SpeedControllerGroup(frontLeft, backLeft), new SpeedControllerGroup(frontRight, backRight));
     }
 
-    public int getRotations(String location) { 
+    public double getRotations(String location) { 
         if (location == "fL") {
             int temp = frontLeft.getSelectedSensorPosition();
-            return temp;
+            double val = temp / 4096;
+            return val;
         }
         if (location == "bR") {
             int temp = backRight.getSelectedSensorPosition();
-            return temp;
+            double val = temp / 4096;
+            return val;
+            
         }
         return 0;
 
