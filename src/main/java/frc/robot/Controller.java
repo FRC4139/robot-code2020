@@ -32,9 +32,10 @@ public class Controller{
     private ColorWheel colorWheel;
     private int colorPort;
     private double colorWheelVal;
-    private AHRS ahrs; 
+    public AHRS ahrs; 
     private AnalogInput m_ultrasonic;
     private ColorSensor colorSensor; 
+    private DashboardWriter dWriter; 
     //private ColorArm colorArm;
     //private int servoPWMChannel;
     //private double upServoVal, downServoVal;
@@ -51,6 +52,8 @@ public class Controller{
         controller1 = new XboxController(0);
         controller2 = new XboxController(1);
         colorSensor = new ColorSensor();
+        dWriter = new DashboardWriter(this);
+        //dWriter.AddData(this);
         //conveyor = new Conveyor(intConvPort1,intConvPort2);
         //convDriveVal = ;
         //intConvPort1 = ;
@@ -83,11 +86,12 @@ public class Controller{
         double angleFacing = ahrs.getAngle();
 
         //get value from the ultrasonic sensor mounted in the front of the robot
-        double ultrasonicReading = getUltraSonicReading();
+        double ultrasonicReading = GetUltraSonicReading();
 
         //get value from the color sensor 
         String detectedColor = colorSensor.ReturnColor();
 
+        dWriter.Update();
         //logic code below
         wheels.drive(controller1.getY(Hand.kLeft), controller1.getY(Hand.kRight));
         if (controller1.getAButtonPressed())
@@ -179,7 +183,15 @@ public class Controller{
         }
     }
 
-    private double getUltraSonicReading() {
+    public double GetUltraSonicReading() {
         return m_ultrasonic.getValue()*0.125f/2.54f;
+    }
+
+    public double GetAngleFacing() {
+        return ahrs.getAngle();
+    }
+    
+    public String GetColorSensing() {
+        return colorSensor.ReturnColor();
     }
 }
