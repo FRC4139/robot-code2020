@@ -1,11 +1,14 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.SPI;
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.AnalogInput;
 public class Controller{
     // THE VALUES FOR THE DOUBLES BELOW NEED TO BE CONFIGURED MANUALLY
 
     //main controller
-    //private XboxController controller1;
+    private XboxController controller1;
     private Wheels wheels;
     private int intakeVal;
     //    CONVEYOR CODE DELETED
@@ -19,14 +22,22 @@ public class Controller{
     private ColorWheel colorWheel;
     private int colorPort;
     private double colorWheelVal;
+    private AHRS ahrs;
+    private AnalogInput m_ultrasonic;
     private boolean hookUp;
     
     //private Vision vision;
     //private int visionParam;
     public void controllerInit()
     {
+        ahrs = new AHRS(SPI.Port.kMXP);
+        m_ultrasonic = new AnalogInput(0);
+        //wheelPort1 = wheelPort1;
+        //wheelPort2 = wheelPort2;
+        //wheelPort3 = wheelPort3;
+        //wheelPort4 = wheelPort4;
         wheels = new Wheels(wheelPort1, wheelPort2, wheelPort3, wheelPort4);
-        //controller1 = new XboxController(0);
+        controller1 = new XboxController(0);
         //intakePort = ;
         //hookPort = ;
         //shooterVal = ;
@@ -41,7 +52,19 @@ public class Controller{
         hookUp = true;
     }
     
-    public void update(XboxController controller1) {
+    public void updateTeleop() {
+     // get values from the encoder. every 1 represents 1 rotation which is 2 pi r (6 pi) inches
+        double frontLeftRotations = wheels.getRotations("fL");
+        double backLeftRotations = wheels.getRotations("bR");
+
+    //get values from the navx gyro to see which angle we are facing
+    double angleFacing = ahrs.getAngle();
+
+    //get value from the ultrasonic sensor mounted in the front of the robot
+    double ultrasonicReading = getUltraSonicReading();
+
+    //logic code below
+    wheels.drive(controller1.getY(Hand.kLeft), controller1.getY(Hand.kRight));
     if (controller1.getAButtonPressed())
     {
 
@@ -85,6 +108,10 @@ public class Controller{
     if(controller1.getTriggerAxis(Hand.kRight)>.1)
     {
         shooter.shootRun(shooterVal);
+    }
+    if(controller1.getTriggerAxis(Hand.kRight)>.1 && controller1.getTriggerAxis(Hand.kLeft)>.1)
+    {
+        shooter.loader();
     }
 
 
@@ -133,5 +160,10 @@ public class Controller{
         colorWheel.flyRun(colorWheelVal);
     }*/
     }
+    private double getUltraSonicReading()
+    {
+        return m_ultrasonic.getValue()*0.125f/2.54f;
+    }
     
 }
+
