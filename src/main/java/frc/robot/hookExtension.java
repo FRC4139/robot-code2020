@@ -4,23 +4,26 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class hookExtension
 {
-    private WPI_TalonSRX motor;
+    private WPI_TalonSRX motor1;
+    private WPI_TalonSRX motor2;
 
     //port 1 place holder
-    public hookExtension(int port1)
+    public hookExtension(int port1, int port2)
      {
-        motor = new WPI_TalonSRX(port1);
+        motor1 = new WPI_TalonSRX(port1);
+        motor2 = new WPI_TalonSRX(port2);
     }
     
     //lowers hook
     public void lower()
     {
-            motor.set(-.75);
+            motor1.set(-.75);
+            motor2.set(-.75);
     }
 
     //raises hook
     public void raise()
     {
-        motor.set(.75);
+        motor1.set(.75);
     }
 }
