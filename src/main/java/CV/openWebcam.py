@@ -5,16 +5,22 @@ import cv2
 def nothing(x):
     pass
 
-
 cap = cv2.VideoCapture(0)
+
+frame_width = 640
+frame_height = 480
+frame_center = 240
+cap.set(3, frame_width)
+cap.set(4, frame_height)
+
 
 # Setting up Trackbars
 cv2.namedWindow('Control Panel')  # makes a control panel
-cv2.createTrackbar('Hue', 'Control Panel', 0, 180, nothing)  # default 0 205 255 69 8 12
-cv2.createTrackbar('Sat', 'Control Panel', 0, 255, nothing)
-cv2.createTrackbar('Val', 'Control Panel', 0, 255, nothing)
-cv2.createTrackbar('Hrange', 'Control Panel', 0, 127, nothing)
-cv2.createTrackbar('Srange', 'Control Panel', 0, 127, nothing)
+cv2.createTrackbar('Hue', 'Control Panel', 112, 180, nothing)  # default 0 205 255 69 8 12
+cv2.createTrackbar('Sat', 'Control Panel', 55, 255, nothing)
+cv2.createTrackbar('Val', 'Control Panel', 255, 255, nothing)
+cv2.createTrackbar('Hrange', 'Control Panel', 26, 127, nothing)
+cv2.createTrackbar('Srange', 'Control Panel', 57, 127, nothing)
 cv2.createTrackbar('Vrange', 'Control Panel', 0, 127, nothing)
 
 while (True):
@@ -47,8 +53,17 @@ while (True):
 
         # calculating the radius and center of the biggest contour
         ((x, y), radius) = cv2.minEnclosingCircle(c)
+        center_x = (x+radius)/2
+        center_y = (y+radius)/2
+        threshold = 0.2*frame_width
         cv2.circle(frame, (int(x), int(y)), int(radius), (255, 255, 255), 5, 2)
         # cv2.circle(mask, (int(x), int(y)), int(radius), color[, thickness[, lineType[, shift]]])
+        if(center_x > (frame_center+threshold-40)):
+            print("left")
+        if(center_x < (frame_center-threshold-40)):
+            print("right")
+        if(center_x > (frame_center-threshold-40) and center_x < (frame_center+threshold-40)):
+            print("center")
 
     #displaying what the program is seeing
     cv2.imshow("Frame", frame)
