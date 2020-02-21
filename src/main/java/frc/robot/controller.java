@@ -17,6 +17,7 @@ public class Controller{
     private int wheelPort1, wheelPort2, wheelPort3, wheelPort4;
     //private HookExtension hook;
     private int hookPort;
+    private Shooter revShoot;
     private Shooter shooter;
     private int shooterVal;
     private ColorWheel colorWheel;
@@ -74,15 +75,7 @@ public class Controller{
     {
         wheels.inverse();
     }
-    //drum out
-    if(controller1.getBButtonPressed())
-    {
-        if(hookUp)
-            hook.lower();
-        else
-            hook.raise();        
-    }
-    
+  
     //1st controller right bumper; hook up (that sounds weird)
     if(controller1.getBumperPressed(Hand.kRight))
     {
@@ -99,19 +92,16 @@ public class Controller{
     {
         //vision something
     }
-    //left trigger
+    //left trigger; revs up shooter
     if(controller1.getTriggerAxis(Hand.kLeft)>.1)
     {
-        colorWheel.flyRun(colorWheelVal);
+        revShoot.charge(0.6);
     }
     // right trigger; controls shooter
-    if(controller1.getTriggerAxis(Hand.kRight)>.1)
-    {
-        shooter.shootRun(shooterVal);
-    }
+    
     if(controller1.getTriggerAxis(Hand.kRight)>.1 && controller1.getTriggerAxis(Hand.kLeft)>.1)
     {
-        shooter.loader();
+        shooter.fire(); //kick fuel
     }
 
 
