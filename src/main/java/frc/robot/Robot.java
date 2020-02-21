@@ -27,10 +27,10 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
-  //private XboxController controller1;
+  private XboxController controller1;
   //private XboxController controller2;
   private Controller masterController; 
-  //private Wheels wheels;
+  private Wheels wheels;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -39,12 +39,13 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     masterController = new Controller();
+    masterController.controllerInit();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    //controller1 = new XboxController(0);
+    controller1 = new XboxController(0);
     //controller2 = new XboxController(1);
-    //wheels = new Wheels(3, 8, 9, 10);
+    wheels = new Wheels(4, 3, 2, 1);
   }
 
   /**
@@ -98,8 +99,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    //wheels.drive(controller1.getY(Hand.kLeft), controller1.getY(Hand.kRight));
-  
+    wheels.drive(controller1.getY(Hand.kLeft), controller1.getY(Hand.kRight));
+    masterController.UpdateTeleop();
     //SmartDashboard.putString("[left joystick] ", "value: " + controller.getY(Hand.kLeft));
     //SmartDashboard.putString("[right joystick] ", "value: " + controller.getY(Hand.kRight));
     //SmartDashboard.putString("Position of mag encoder", "value: " + wheels.getRotations("fL"));

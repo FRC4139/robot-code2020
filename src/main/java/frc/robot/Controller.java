@@ -3,6 +3,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.SPI;
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.ColorMatch;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 public class Controller{
     // THE VALUES FOR THE DOUBLES BELOW NEED TO BE CONFIGURED MANUALLY
@@ -25,10 +27,12 @@ public class Controller{
     private double colorWheelVal;
     private AHRS ahrs;
     private AnalogInput m_ultrasonic;
-    private boolean hookUp;
-    
-    //private Vision vision;
-    //private int visionParam;
+    private ColorSensor colorSensor; 
+    //private ColorArm colorArm;
+    //private int servoPWMChannel;
+    //private double upServoVal, downServoVal;
+
+
     public void controllerInit()
     {
         ahrs = new AHRS(SPI.Port.kMXP);
@@ -58,8 +62,61 @@ public class Controller{
         double frontLeftRotations = wheels.getRotations("fL");
         double backLeftRotations = wheels.getRotations("bR");
 
-    //get values from the navx gyro to see which angle we are facing
-    double angleFacing = ahrs.getAngle();
+        //get values from the navx gyro to see which angle we are facing
+        double angleFacing = ahrs.getAngle();
+
+        //get value from the ultrasonic sensor mounted in the front of the robot
+        double ultrasonicReading = getUltraSonicReading();
+
+        //get value from the color sensor 
+        String detectedColor = colorSensor.ReturnColor();
+
+        //logic code below
+        wheels.drive(controller1.getY(Hand.kLeft), controller1.getY(Hand.kRight));
+        if (controller1.getAButtonPressed())
+        {
+            //conveyor.drive(driveVal);
+            
+        }
+        //drum in 
+        if(controller1.getYButtonPressed())
+        {
+            //drumVal = ;
+            //drawbridge.SetVal(drumVal);
+        }
+        //drum out
+        if(controller1.getBButtonPressed())
+        {
+            //drumVal = ;
+            //drawbridge.SetVal(drumVal);
+        }
+        
+        //1st controller right bumper; hook up (that sounds weird)
+        if(controller1.getBumperPressed(Hand.kRight))
+        {
+            //hook.raise();
+        }
+
+        //1st controller left bumper; hook down
+        if(controller1.getBumperPressed(Hand.kLeft))
+        {
+            //hook.lower();
+        }
+        //inverse wheels
+        if(controller1.getXButtonPressed())
+        {
+            wheels.inverse();
+        }
+        //left trigger; intake
+        if(controller1.getTriggerAxis(Hand.kLeft)>.1)
+        {
+            intake.drive(intakeVal);
+        }
+        // right trigger; controls shooter
+        if(controller1.getTriggerAxis(Hand.kRight)>.1)
+        {
+            shooter.shootRun(shooterVal);
+        }
 
     //get value from the ultrasonic sensor mounted in the front of the robot
     double ultrasonicReading = getUltraSonicReading();

@@ -11,7 +11,7 @@ import java.lang.Math;
 public class Wheels {
 
     private WPI_TalonSRX frontLeft, backLeft, frontRight, backRight;
-    private DifferentialDrive wheels;
+    //private DifferentialDrive wheels;
     private boolean inverseState;
 
     public Wheels(int fL, int bL, int fR, int bR) {
@@ -20,19 +20,22 @@ public class Wheels {
         frontRight = new WPI_TalonSRX(fR);
         backRight = new WPI_TalonSRX(bR);
         inverseState = false;
-        frontLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-        backRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-        wheels = new DifferentialDrive(new SpeedControllerGroup(frontLeft, backLeft), new SpeedControllerGroup(frontRight, backRight));
+        //frontLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+        //backRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+        //wheels = new DifferentialDrive(new SpeedControllerGroup(frontLeft, backLeft), new SpeedControllerGroup(frontRight, backRight));
     }
 
-    public int getRotations(String location) { 
+    public double getRotations(String location) { 
         if (location == "fL") {
             int temp = frontLeft.getSelectedSensorPosition();
-            return temp;
+            double val = temp / 4096;
+            return val;
         }
         if (location == "bR") {
             int temp = backRight.getSelectedSensorPosition();
-            return temp;
+            double val = temp / 4096;
+            return val;
+            
         }
         return 0;
 
@@ -46,12 +49,16 @@ public class Wheels {
             //if inversState is true, reverse the speeds and call drive 
             leftSpeed = leftSpeed*-1;
             rightSpeed = rightSpeed*-1;
-            wheels.tankDrive(leftSpeed, rightSpeed);
+            //wheels.tankDrive(leftSpeed, rightSpeed);
         }
         else
         {
             //makes sure speeds are positive
-            wheels.tankDrive(Math.abs(leftSpeed), Math.abs(rightSpeed));
+            //wheels.tankDrive(Math.abs(leftSpeed), Math.abs(rightSpeed));
+            frontLeft.set(-leftSpeed*.5);
+            backLeft.set(-leftSpeed*.5);
+            frontRight.set(rightSpeed*.5);
+            backRight.set(-rightSpeed*.5);
         }
     }
     public void inverse()
