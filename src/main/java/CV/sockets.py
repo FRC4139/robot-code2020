@@ -6,7 +6,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print('Socket created')
 
 try:
-    s.bind((HOST, PORT))
+    s.bind(('', PORT))
 except socket.error as err:
     print('Bind failed. Error Code : ' .format(err))
 s.listen(10)
