@@ -31,7 +31,7 @@ public class Controller{
     //private ColorArm colorArm;
     //private int servoPWMChannel;
     //private double upServoVal, downServoVal;
-
+    private Boolean hookUp; 
 
     public void controllerInit()
     {
@@ -54,10 +54,10 @@ public class Controller{
         //  hook = new HookExtension(hookPort);
         colorWheel = new ColorWheel(colorPort);
         // colorArm = new ColorArm(servoPWMChannel);
-        hookUp = true;
+        hookUp = false;
     }
     
-    public void updateTeleop() {
+    public void UpdateTeleop() {
      // get values from the encoder. every 1 represents 1 rotation which is 2 pi r (6 pi) inches
         double frontLeftRotations = wheels.getRotations("fL");
         double backLeftRotations = wheels.getRotations("bR");
@@ -75,95 +75,46 @@ public class Controller{
         wheels.drive(controller1.getY(Hand.kLeft), controller1.getY(Hand.kRight));
         if (controller1.getAButtonPressed())
         {
-            //conveyor.drive(driveVal);
-            
+
         }
         //drum in 
         if(controller1.getYButtonPressed())
         {
-            //drumVal = ;
-            //drawbridge.SetVal(drumVal);
+            wheels.inverse();
         }
-        //drum out
-        if(controller1.getBButtonPressed())
-        {
-            //drumVal = ;
-            //drawbridge.SetVal(drumVal);
-        }
-        
+    
         //1st controller right bumper; hook up (that sounds weird)
         if(controller1.getBumperPressed(Hand.kRight))
         {
-            //hook.raise();
+            
         }
 
         //1st controller left bumper; hook down
         if(controller1.getBumperPressed(Hand.kLeft))
         {
-            //hook.lower();
+            intake.drive(intakeVal);
         }
         //inverse wheels
         if(controller1.getXButtonPressed())
         {
-            wheels.inverse();
+            //vision something
         }
-        //left trigger; intake
+        //left trigger; revs up shooter
         if(controller1.getTriggerAxis(Hand.kLeft)>.1)
         {
-            intake.drive(intakeVal);
+            revShoot.charge(0.6);
         }
         // right trigger; controls shooter
-        if(controller1.getTriggerAxis(Hand.kRight)>.1)
+        
+        if(controller1.getTriggerAxis(Hand.kRight)>.1 && controller1.getTriggerAxis(Hand.kLeft)>.1)
         {
-            shooter.shootRun(shooterVal);
+            shooter.fire(); //kick fuel
         }
 
-    //get value from the ultrasonic sensor mounted in the front of the robot
-    double ultrasonicReading = getUltraSonicReading();
 
-    //logic code below
-    wheels.drive(controller1.getY(Hand.kLeft), controller1.getY(Hand.kRight));
-    if (controller1.getAButtonPressed())
-    {
+        }
 
-    }
-    //drum in 
-    if(controller1.getYButtonPressed())
-    {
-        wheels.inverse();
-    }
-  
-    //1st controller right bumper; hook up (that sounds weird)
-    if(controller1.getBumperPressed(Hand.kRight))
-    {
-        
-    }
-
-    //1st controller left bumper; hook down
-    if(controller1.getBumperPressed(Hand.kLeft))
-    {
-        intake.drive(intakeVal);
-    }
-    //inverse wheels
-    if(controller1.getXButtonPressed())
-    {
-        //vision something
-    }
-    //left trigger; revs up shooter
-    if(controller1.getTriggerAxis(Hand.kLeft)>.1)
-    {
-        revShoot.charge(0.6);
-    }
-    // right trigger; controls shooter
-    
-    if(controller1.getTriggerAxis(Hand.kRight)>.1 && controller1.getTriggerAxis(Hand.kLeft)>.1)
-    {
-        shooter.fire(); //kick fuel
-    }
-
-
-    }
-    private double getUltraSonicReading()
+    public double getUltraSonicReading()
     {
         return m_ultrasonic.getValue()*0.125f/2.54f;
     }
