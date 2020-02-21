@@ -105,50 +105,6 @@ public class Controller{
     }
 
 
-    //2nd controller 
-    //servo up
-    /*
-    if(controller2.getBButtonPressed())
-    {
-       
-    }
-
-    if(controller2.getXButtonPressed())
-    {
-        
-    }
-    //servo down
-    if(controller2.getAButtonPressed())
-    {
-    
-    }
-
-    if(controller2.getYButton())
-    {
-
-    }
-
-    //2nd controller right bumper
-    if(controller2.getBumperPressed(Hand.kRight))
-    {
-
-    }
-
-    //2nd controller left bumper
-    if(controller2.getBumperPressed(Hand.kLeft))
-    {
-
-    }
-    //right trigger; color spinner right
-    if(controller2.getTriggerAxis(Hand.kRight)>.1)
-    {
-
-    }
-    //left trigger; color spinner left
-    if(controller2.getTriggerAxis(Hand.kLeft)>.1)
-    {
-        colorWheel.flyRun(colorWheelVal);
-    }*/
     }
     private double getUltraSonicReading()
     {
