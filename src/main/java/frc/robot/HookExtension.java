@@ -2,7 +2,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-public class hookExtension
+public class HookExtension
 {
     private WPI_TalonSRX motor1;
     private WPI_TalonSRX motor2;
