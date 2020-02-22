@@ -5,7 +5,7 @@ import cv2
 def nothing(x):
     pass
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 
 frame_width = 640
 frame_height = 480
@@ -17,10 +17,10 @@ cap.set(4, frame_height)
 # Setting up Trackbars
 cv2.namedWindow('Control Panel')  # makes a control panel
 cv2.createTrackbar('Hue', 'Control Panel', 112, 180, nothing)  # default 0 205 255 69 8 12
-cv2.createTrackbar('Sat', 'Control Panel', 55, 255, nothing)
+cv2.createTrackbar('Sat', 'Control Panel', 114, 255, nothing)
 cv2.createTrackbar('Val', 'Control Panel', 255, 255, nothing)
-cv2.createTrackbar('Hrange', 'Control Panel', 26, 127, nothing)
-cv2.createTrackbar('Srange', 'Control Panel', 57, 127, nothing)
+cv2.createTrackbar('Hrange', 'Control Panel', 67, 127, nothing)
+cv2.createTrackbar('Srange', 'Control Panel', 51, 127, nothing)
 cv2.createTrackbar('Vrange', 'Control Panel', 0, 127, nothing)
 
 while (True):
