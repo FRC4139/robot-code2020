@@ -43,6 +43,7 @@ public class Controller{
         //wheelPort4 = wheelPort4;
         wheels = new Wheels(wheelPort1, wheelPort2, wheelPort3, wheelPort4);
         controller1 = new XboxController(0);
+        colorSensor = new ColorSensor();
         //intakePort = ;
         //hookPort = ;
         //shooterVal = ;
@@ -53,6 +54,7 @@ public class Controller{
         intake = new Intake(intakePort);
         //  hook = new HookExtension(hookPort);
         colorWheel = new ColorWheel(colorPort);
+        colorWheel.cs = colorSensor;
         // colorArm = new ColorArm(servoPWMChannel);
         hookUp = false;
     }
