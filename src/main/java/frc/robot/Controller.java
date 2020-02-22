@@ -3,14 +3,13 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.SPI;
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.ColorMatch;
-
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.AnalogInput;
 public class Controller{
     // THE VALUES FOR THE DOUBLES BELOW NEED TO BE CONFIGURED MANUALLY
 
     //main controller
-    private XboxController controller1;
+    private XboxController xcontroller;
     private Wheels wheels;
     private int intakeVal;
     //    CONVEYOR CODE DELETED
@@ -32,6 +31,7 @@ public class Controller{
     //private int servoPWMChannel;
     //private double upServoVal, downServoVal;
     private Boolean hookUp; 
+    private String desiredColor; 
 
     public void controllerInit()
     {
@@ -42,7 +42,7 @@ public class Controller{
         //wheelPort3 = wheelPort3;
         //wheelPort4 = wheelPort4;
         wheels = new Wheels(wheelPort1, wheelPort2, wheelPort3, wheelPort4);
-        controller1 = new XboxController(0);
+        xcontroller = new XboxController(0);
         colorSensor = new ColorSensor();
         //intakePort = ;
         //hookPort = ;
@@ -51,64 +51,74 @@ public class Controller{
         //colorWheelVal = ;
         //visionParam = ;
         //vision = new Vision(visionParam);
+
         intake = new Intake(intakePort);
         //  hook = new HookExtension(hookPort);
-        colorWheel = new ColorWheel(colorPort);
-        colorWheel.cs = colorSensor;
+        colorWheel = new ColorWheel(colorPort, colorSensor);
         // colorArm = new ColorArm(servoPWMChannel);
+
         hookUp = false;
     }
     
     public void UpdateTeleop() {
      // get values from the encoder. every 1 represents 1 rotation which is 2 pi r (6 pi) inches
-        double frontLeftRotations = wheels.getRotations("fL");
-        double backLeftRotations = wheels.getRotations("bR");
+        //double frontLeftRotations = wheels.getRotations("fL");
+        //double backLeftRotations = wheels.getRotations("bR");
 
         //get values from the navx gyro to see which angle we are facing
-        double angleFacing = ahrs.getAngle();
+        //double angleFacing = ahrs.getAngle();
 
         //get value from the ultrasonic sensor mounted in the front of the robot
-        double ultrasonicReading = getUltraSonicReading();
+        //double ultrasonicReading = getUltraSonicReading();
 
         //get value from the color sensor 
-        String detectedColor = colorSensor.ReturnColor();
+        //String detectedColor = colorSensor.ReturnColor();
+
+        //get desired color from FMS
+        desiredColor = DriverStation.getInstance().getGameSpecificMessage();
 
         //logic code below
-        wheels.drive(controller1.getY(Hand.kLeft), controller1.getY(Hand.kRight));
-        if (controller1.getAButtonPressed())
-        {
 
+
+        wheels.drive(xcontroller.getY(Hand.kLeft), xcontroller.getY(Hand.kRight));
+        if (xcontroller.getAButtonPressed() || colorWheel.spinNextFrame)
+        {
+            if (desiredColor.length() == 0) {
+                colorWheel.spinUntilThree();
+            } else {
+                colorWheel.spinToColor(desiredColor);
+            }
         }
         //drum in 
-        if(controller1.getYButtonPressed())
+        if(xcontroller.getYButtonPressed())
         {
             wheels.inverse();
         }
     
         //1st controller right bumper; hook up (that sounds weird)
-        if(controller1.getBumperPressed(Hand.kRight))
+        if(xcontroller.getBumperPressed(Hand.kRight))
         {
             
         }
 
         //1st controller left bumper; hook down
-        if(controller1.getBumperPressed(Hand.kLeft))
+        if(xcontroller.getBumperPressed(Hand.kLeft))
         {
             intake.drive(intakeVal);
         }
         //inverse wheels
-        if(controller1.getXButtonPressed())
+        if(xcontroller.getXButtonPressed())
         {
             //vision something
         }
         //left trigger; revs up shooter
-        if(controller1.getTriggerAxis(Hand.kLeft)>.1)
+        if(xcontroller.getTriggerAxis(Hand.kLeft)>.1)
         {
             revShoot.charge(0.6);
         }
         // right trigger; controls shooter
         
-        if(controller1.getTriggerAxis(Hand.kRight)>.1 && controller1.getTriggerAxis(Hand.kLeft)>.1)
+        if(xcontroller.getTriggerAxis(Hand.kRight)>.1 && xcontroller.getTriggerAxis(Hand.kLeft)>.1)
         {
             shooter.fire(); //kick fuel
         }

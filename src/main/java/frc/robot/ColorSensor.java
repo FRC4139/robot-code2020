@@ -40,13 +40,13 @@ public class ColorSensor
         ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 
         if (match.color == kBlueTarget) {
-        colorString = "Blue";
+        colorString = "B";
         } else if (match.color == kRedTarget) {
-        colorString = "Red";
+        colorString = "R";
         } else if (match.color == kGreenTarget) {
-        colorString = "Green";
+        colorString = "G";
         } else if (match.color == kYellowTarget) {
-        colorString = "Yellow";
+        colorString = "Y";
         } else {
         colorString = "Unknown";
         }
