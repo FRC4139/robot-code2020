@@ -24,7 +24,7 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-
+  private Autonomous autonomous;
   //private XboxController controller1;
   //private XboxController controller2;
   private Controller masterController; 
@@ -41,6 +41,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    autonomous = new Autonomous();
     //controller1 = new XboxController(0);
     //controller2 = new XboxController(1);
     //wheels = new Wheels(3, 8, 9, 10);
@@ -83,7 +84,7 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     switch (m_autoSelected) {
       case kCustomAuto:
-        // Put custom auto code here
+        autonomous.Main(masterController, masterController.wheels);
         break;
       case kDefaultAuto:
       default:

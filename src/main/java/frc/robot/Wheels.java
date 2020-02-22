@@ -26,6 +26,7 @@ public class Wheels {
     }
 
     public double getRotations(String location) { 
+        
         if (location == "fL") {
             int temp = frontLeft.getSelectedSensorPosition();
             double val = temp / 4096;
@@ -41,6 +42,10 @@ public class Wheels {
 
     }
 
+    public void resetRotations() {
+        backRight.setSelectedSensorPosition(0);
+        frontLeft.setSelectedSensorPosition(0);
+    }
     // Negative speed turns wheels backwards
     public void drive(double leftSpeed, double rightSpeed) {
         
