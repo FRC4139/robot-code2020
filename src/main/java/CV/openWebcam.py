@@ -53,16 +53,14 @@ while (True):
 
         # calculating the radius and center of the biggest contour
         ((x, y), radius) = cv2.minEnclosingCircle(c)
-        center_x = (x+radius)/2
-        center_y = (y+radius)/2
-        threshold = 0.2*frame_width
+        threshold = 0.1*frame_width
         cv2.circle(frame, (int(x), int(y)), int(radius), (255, 255, 255), 5, 2)
         # cv2.circle(mask, (int(x), int(y)), int(radius), color[, thickness[, lineType[, shift]]])
-        if(center_x > (frame_center+threshold-40)):
+        if(center_x > (frame_center+threshold)):
             print("left")
-        if(center_x < (frame_center-threshold-40)):
+        if(center_x < (frame_center-threshold)):
             print("right")
-        if(center_x > (frame_center-threshold-40) and center_x < (frame_center+threshold-40)):
+        if(center_x > (frame_center-threshold) and center_x < (frame_center+threshold)):
             print("center")
 
     #displaying what the program is seeing
