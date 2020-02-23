@@ -2,15 +2,15 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import edu.wpi.first.wpilibj.Timer;
 public class ColorWheel
 {
     private WPI_TalonSRX fly;
     public ColorSensor cs; 
-
+    private Timer time;
     public String lastColor = "n/a";
     public String currentColor = "n/a";
-    public int segmentsPassed = -1;
+    public int segmentsPassed = 0; //Changed this to zero
 
     public Boolean spinNextFrame = false; 
     
@@ -25,25 +25,23 @@ public class ColorWheel
         fly.set(val);
     }
 
-    public void spinUntilThree() {
-        currentColor = cs.ReturnColor();
-        if (currentColor != lastColor) {
-            segmentsPassed++;
-            lastColor = currentColor;
-            SmartDashboard.putNumber("Color segments passed: ", segmentsPassed);
+
+    public void spinNumRotations(int rotations) {
+        int segmentsNeeded = rotations*9; // Reason why this is multiplied by nine is because it rotates all the way to the original position, DM me if you need clarification
+        while(segmentsPassed != segmentsNeeded){ // this will make the code run until we reach a full rotation
+            currentColor = cs.ReturnColor();
+            if (currentColor != lastColor) {
+                segmentsPassed++;
+                lastColor = currentColor;
+                SmartDashboard.putNumber("Color segments passed: ", segmentsPassed);
+               
+            }
+            if ((currentColor = lastColor) && segmentsPassed != segmentsNeeded){
+                flyRun(.3);
+                time.delay(.5);
+            }
         }
-
-        if (segmentsPassed < 25) {
-            flyRun(1);
-            spinNextFrame = true;
-        } else {
-            // once we have spun 3 times, we need to stop spinning
-            flyRun(0);
-            // and not spin the next frame
-            spinNextFrame = false;
-        }
-
-
+      
     }
 
     // the following code does not account for an error in which the FMS wants the current color as the desired color... ?
@@ -56,7 +54,7 @@ public class ColorWheel
         }
 
         if (currentColor != desiredColor) {
-            flyRun(1);
+            flyRun(.3);
             spinNextFrame = true;
         } else {
             flyRun(0);
