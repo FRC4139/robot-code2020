@@ -84,7 +84,7 @@ public class Controller{
         if (xcontroller.getAButtonPressed() || colorWheel.spinNextFrame)
         {
             if (desiredColor.length() == 0) {
-                colorWheel.spinNumRotations();
+                colorWheel.spinUntilThree();
             } else {
                 colorWheel.spinToColor(desiredColor);
             }
@@ -132,4 +132,3 @@ public class Controller{
     }
     
 }
-
