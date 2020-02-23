@@ -28,18 +28,20 @@ public class ColorWheel
 
     public void spinNumRotations(int rotations) {
         int segmentsNeeded = rotations*9; // Reason why this is multiplied by nine is because it rotates all the way to the original position, DM me if you need clarification
-        while(segmentsPassed != segmentsNeeded){ // this will make the code run until we reach a full rotation
-            currentColor = cs.ReturnColor();
-            if (currentColor != lastColor) {
-                segmentsPassed++;
-                lastColor = currentColor;
-                SmartDashboard.putNumber("Color segments passed: ", segmentsPassed);
+        currentColor = cs.ReturnColor();
+        if (currentColor != lastColor) {
+            segmentsPassed++;
+            lastColor = currentColor;
+            SmartDashboard.putNumber("Color segments passed: ", segmentsPassed);
                
-            }
-            if ((currentColor = lastColor) && segmentsPassed != segmentsNeeded){
-                flyRun(.3);
-                time.delay(.5);
-            }
+        }
+        if (segmentsPassed != segmentsNeeded){
+            flyRun(.3);
+            spinNextFrame = true;
+        }
+        else{
+            flyRun(0);
+            spinNextFrame = false;
         }
       
     }
