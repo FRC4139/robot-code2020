@@ -17,7 +17,7 @@ public class Controller{
     private Intake intake;
     private int intakePort;
     private int wheelPort1, wheelPort2, wheelPort3, wheelPort4;
-    //private HookExtension hook;
+    private HookExtension hook;
     private int hookPort;
     private Shooter revShoot;
     private Shooter shooter;
@@ -31,6 +31,7 @@ public class Controller{
     //private ColorArm colorArm;
     //private int servoPWMChannel;
     //private double upServoVal, downServoVal;
+    private boolean hookUp;
 
 
     public void controllerInit()
@@ -51,7 +52,7 @@ public class Controller{
         //visionParam = ;
         //vision = new Vision(visionParam);
         intake = new Intake(intakePort);
-        //  hook = new HookExtension(hookPort);
+        hook = new HookExtension(hookPort);
         colorWheel = new ColorWheel(colorPort);
         // colorArm = new ColorArm(servoPWMChannel);
         hookUp = true;
@@ -81,43 +82,23 @@ public class Controller{
         //drum in 
         if(controller1.getYButtonPressed())
         {
-            //drumVal = ;
-            //drawbridge.SetVal(drumVal);
+            wheels.inverse();
         }
         //drum out
         if(controller1.getBButtonPressed())
         {
-            //drumVal = ;
-            //drawbridge.SetVal(drumVal);
+            if(hookUp)
+            {
+                hook.lower();
+                hookUp = false;
+            }
+            if(!hookUp)
+            {
+                hook.raise();
+                hookUp = true;
+            }
         }
         
-        //1st controller right bumper; hook up (that sounds weird)
-        if(controller1.getBumperPressed(Hand.kRight))
-        {
-            //hook.raise();
-        }
-
-        //1st controller left bumper; hook down
-        if(controller1.getBumperPressed(Hand.kLeft))
-        {
-            //hook.lower();
-        }
-        //inverse wheels
-        if(controller1.getXButtonPressed())
-        {
-            wheels.inverse();
-        }
-        //left trigger; intake
-        if(controller1.getTriggerAxis(Hand.kLeft)>.1)
-        {
-            intake.drive(intakeVal);
-        }
-        // right trigger; controls shooter
-        if(controller1.getTriggerAxis(Hand.kRight)>.1)
-        {
-            shooter.shootRun(shooterVal);
-        }
-
     //get value from the ultrasonic sensor mounted in the front of the robot
     double ultrasonicReading = getUltraSonicReading();
 
