@@ -21,7 +21,7 @@ public class Autonomous{
                 wheels.drive(.5, .5);
                 return;
             }
-            if(angleFacing>-90 && segment == 1){ //MAKE SURE TO SWITCH ALL ANGLES TO NEGATIVE VALUES APPROPRIATELY!!!!!!!!!!!!!!!!!
+            if(angleFacing>-90 && segment == 1){ //MAKE SURE TO SWITCH ALL ANGLES TO NEGATIVE VALUES APPROPRIATELY!!!!!!!!!!!!!!!!!!
                 wheels.drive(.5, -.5);
                 return;
             }
