@@ -17,29 +17,29 @@ public class Autonomous{
         double frontLeftRotations = wheels.getRotations("fL");
         double backLeftRotations = wheels.getRotations("bR");
         if(position=="left"){ //left
-            if(frontLeftRotations < 0.4914 && backLeftRotations < 0.4914 && segment == 1){
+            if(frontLeftRotations < 0.4914 && backLeftRotations < 0.4914 && segment == 1){ //forward
                 wheels.drive(.5, .5);
                 return;
             }
-            if(angleFacing>-90 && segment == 1){ //MAKE SURE TO SWITCH ALL ANGLES TO NEGATIVE VALUES APPROPRIATELY!!!!!!!!!!!!!!!!!!
+            if(angleFacing<90 && segment == 1){ //turn right
                 wheels.drive(.5, -.5);
                 return;
             }
-            if (angleFacing >= 90 && segment == 1) {
+            if (angleFacing >= 90 && segment == 1) { //resetting encoder values and starting segment 2
                 wheels.resetRotations();
                 segment++;
                 return;
             }
-            if(frontLeftRotations < /* placeholder */ && backLeftRotations < /* placeholder */ && segment == 2){
+            if(frontLeftRotations < /* placeholder */ && backLeftRotations < /* placeholder */ && segment == 2){ //forward
                 wheels.drive(.5, .5);
                 return;
             }
             
-            if(angleFacing<90){ //turn 180
+            if(angleFacing>-90){ // turning left
                 wheels.drive(-.5, .5);
                 return;
             }
-            if(angleFacing >=90 && segment == 2){
+            if(angleFacing <= -90 && segment == 2){ //reset encoder values and starting segment 3 (not gonna be used though)
                 wheels.resetRotations();
                 segment++;
                 return;
@@ -49,29 +49,29 @@ public class Autonomous{
             }
         
         if(position == "mid"){ //mid
-            if(frontLeftRotations < /* placeholder */ && backLeftRotations < /* placeholder */ && segment == 1){
+            if(frontLeftRotations < /* placeholder */ && backLeftRotations < /* placeholder */ && segment == 1){ //forward
                 wheels.drive(.5, .5);
                 return;
             }
-            if(angleFacing<90 && segment == 1){
+            if(angleFacing<90 && segment == 1){ //turn right
                 wheels.drive(.5, -.5);
                 return;
             }
-            if (angleFacing >= 90 && segment == 1) {
+            if (angleFacing >= 90 && segment == 1) { //resetting encoder values and starting segment 2
                 wheels.resetRotations();
                 segment++;
                 return;
             }
-            if(frontLeftRotations < /* placeholder */ && backLeftRotations < /* placeholder */ && segment == 2){
+            if(frontLeftRotations < /* placeholder */ && backLeftRotations < /* placeholder */ && segment == 2){ //forward
                 wheels.drive(.5, .5);
                 return;
             }
             
-            if(angleFacing<90){ //turn 180
+            if(angleFacing>-90){ //turning left
                 wheels.drive(-.5, .5);
                 return;
             }
-            if(angleFacing >=90 && segment == 2){
+            if(angleFacing <= -90 && segment == 2){ //resetting encoder values and starting segment 3 (again, not gonna be used)
                 wheels.resetRotations();
                 segment++;
                 return;
@@ -81,29 +81,29 @@ public class Autonomous{
             }
         if(position == "right"){ //right
             
-            if(frontLeftRotations < /* placeholder */ && backLeftRotations < /* placeholder */ && segment == 1){
+            if(frontLeftRotations < /* placeholder */ && backLeftRotations < /* placeholder */ && segment == 1){ //forward
                 wheels.drive(.5, .5);
                 return;
             }
-            if(angleFacing<90 && segment == 1){
+            if(angleFacing<90 && segment == 1){ //turn left
                 wheels.drive(-.5, .5);
                 return;
             }
-            if (angleFacing >= 90 && segment == 1) {
+            if (angleFacing >= 90 && segment == 1) { //resetting encoder values and starting segment 2
                 wheels.resetRotations();
                 segment++;
                 return;
             }
-            if(frontLeftRotations < /* placeholder */ && backLeftRotations < /* placeholder */ && segment == 2){
+            if(frontLeftRotations < /* placeholder */ && backLeftRotations < /* placeholder */ && segment == 2){ //forward
                 wheels.drive(.5, .5);
                 return;
             }
             
-            if(angleFacing<90){ //turn 180
+            if(angleFacing>-90){ //turn right
                 wheels.drive(.5, -.5);
                 return;
             }
-            if(angleFacing >=90 && segment == 2){
+            if(angleFacing <= 90 && segment == 2){ //resetting encoder values and startin encoder 3 (again x2, not using seg 3)
                 wheels.resetRotations();
                 segment++;
                 return;
