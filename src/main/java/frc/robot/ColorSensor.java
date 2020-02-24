@@ -39,6 +39,9 @@ public class ColorSensor
         String colorString;
         ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 
+        if (match.confidence < 0.90) {
+            return "NC";
+        }
         if (match.color == kBlueTarget) {
         colorString = "B";
         } else if (match.color == kRedTarget) {

@@ -25,22 +25,28 @@ public class ColorWheel
         fly.set(val);
     }
 
-    public void spinUntilThree() {
+    public void spinUntilThree(Controller c) {
+        
         currentColor = cs.ReturnColor();
-        if (currentColor != lastColor) {
+        if (currentColor != lastColor && currentColor != "NC") {
             segmentsPassed++;
             lastColor = currentColor;
             SmartDashboard.putNumber("Color segments passed: ", segmentsPassed);
         }
 
         if (segmentsPassed < 25) {
-            flyRun(.3);
+            flyRun(0.3);
             spinNextFrame = true;
+            //SmartDashboard.putBoolean("seg < 25", true);
+            c.spunTillThree = false;
         } else {
             // once we have spun 3 times, we need to stop spinning
             flyRun(0);
             // and not spin the next frame
             spinNextFrame = false;
+            //SmartDashboard.putBoolean("seg < 25", false);
+            //System.out.println("stopped spinning");
+            c.spunTillThree = true;
         }
 
 
@@ -49,18 +55,23 @@ public class ColorWheel
     // the following code does not account for an error in which the FMS wants the current color as the desired color... ?
     public void spinToColor(String desiredColor) {
         currentColor = cs.ReturnColor();
-        if (currentColor != lastColor) {
+        
+        if (currentColor != lastColor  && currentColor != "NC") {
             segmentsPassed++;
             lastColor = currentColor;
-            SmartDashboard.putNumber("Color segments passed: ", segmentsPassed);
+            SmartDashboard.putNumber("Color segments passed v2: ", segmentsPassed);
         }
 
-        if (currentColor != desiredColor) {
-            flyRun(.3);
+        if (!currentColor.equals(desiredColor)) {
+            flyRun(0.3);
             spinNextFrame = true;
+            //SmartDashboard.putBoolean("seg < 25v2", true);
+            //System.out.println("spinning to desired color");
         } else {
             flyRun(0);
             spinNextFrame = false;
+            //System.out.println("stopped spinning v2");
+            //SmartDashboard.putBoolean("seg < 25v2", false);
         }
     }
 

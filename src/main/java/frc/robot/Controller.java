@@ -1,10 +1,12 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SPI;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Servo;
 public class Controller{
     // THE VALUES FOR THE DOUBLES BELOW NEED TO BE CONFIGURED MANUALLY
 
@@ -22,7 +24,7 @@ public class Controller{
     private Shooter shooter;
     private int shooterVal;
     private ColorWheel colorWheel;
-    private int colorPort;
+    private int colorPort = 7;
     private double colorWheelVal;
     private AHRS ahrs;
     private AnalogInput m_ultrasonic;
@@ -32,6 +34,9 @@ public class Controller{
     //private double upServoVal, downServoVal;
     private Boolean hookUp; 
     private String desiredColor; 
+    private Boolean colorServoDeployed = false; 
+    public Boolean spunTillThree = false;
+    private Servo colorServo; 
 
     public void controllerInit()
     {
@@ -44,6 +49,8 @@ public class Controller{
         wheels = new Wheels(wheelPort1, wheelPort2, wheelPort3, wheelPort4);
         xcontroller = new XboxController(0);
         colorSensor = new ColorSensor();
+        colorServo = new Servo(0); // UPDATE PORT ACCORDINGLY
+        colorServo.set(0);
         //intakePort = ;
         //hookPort = ;
         //shooterVal = ;
@@ -78,16 +85,34 @@ public class Controller{
         desiredColor = DriverStation.getInstance().getGameSpecificMessage();
 
         //logic code below
-
-
+        //SmartDashboard.putBoolean("spin next frame", colorWheel.spinNextFrame);
+        SmartDashboard.putBoolean("servo deployed", colorServoDeployed);
+        SmartDashboard.putBoolean("spun 3 times", spunTillThree);
+        SmartDashboard.putString("gdata", desiredColor);
         wheels.drive(xcontroller.getY(Hand.kLeft), xcontroller.getY(Hand.kRight));
         if (xcontroller.getAButtonPressed() || colorWheel.spinNextFrame)
         {
-            if (desiredColor.length() == 0) {
-                colorWheel.spinUntilThree();
+            if (colorServoDeployed) {
+                //System.out.println("Spun till 3? " + spunTillThree.toString());
+                if (!spunTillThree) {
+                    colorWheel.spinUntilThree(this);
+                    /*
+                    SmartDashboard.putBoolean("spin 3", true);
+                    SmartDashboard.putBoolean("spin color", false);
+                    System.out.println("spinning till 3 since desiredColor is '" + desiredColor + "'");
+                    */
+                } else {
+                    colorWheel.spinToColor(desiredColor);
+                    /*
+                    SmartDashboard.putBoolean("spin 3", false);
+                    SmartDashboard.putBoolean("spin color", true);
+                    System.out.println("spinning to color"); */
+                }
             } else {
-                colorWheel.spinToColor(desiredColor);
+                colorServo.set(0.5);
+                colorServoDeployed = true;
             }
+            
         }
         //drum in 
         if(xcontroller.getYButtonPressed())
@@ -129,6 +154,11 @@ public class Controller{
     public double getUltraSonicReading()
     {
         return m_ultrasonic.getValue()*0.125f/2.54f;
+    }
+
+    public double getAngleFacing() 
+    {
+        return ahrs.getAngle();
     }
     
 }
