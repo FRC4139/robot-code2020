@@ -2,11 +2,10 @@ import cv2
 import numpy as np
 import math
 import time
-from nms import non_max_suppression_fast
 
 i = 0
 
-video = cv2.VideoCapture(0)
+video = cv2.VideoCapture("reflectiveGreen.MOV")
 
 # Downscale the image to a reasonable size to reduce compute
 scale = .5
