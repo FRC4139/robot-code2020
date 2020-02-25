@@ -18,7 +18,7 @@ public class Controller{
     private Intake intake;
     private int intakePort;
     private int wheelPort1, wheelPort2, wheelPort3, wheelPort4;
-    //private HookExtension hook;
+    private HookExtension hook;
     private int hookPort;
     private Shooter revShoot;
     private Shooter shooter;
@@ -60,8 +60,11 @@ public class Controller{
         //vision = new Vision(visionParam);
 
         intake = new Intake(intakePort);
-        //  hook = new HookExtension(hookPort);
+
+        hook = new HookExtension(hookPort);
+
         colorWheel = new ColorWheel(colorPort, colorSensor);
+
         // colorArm = new ColorArm(servoPWMChannel);
 
         hookUp = false;
@@ -118,13 +121,23 @@ public class Controller{
         if(xcontroller.getYButtonPressed())
         {
             wheels.inverse();
+
         }
-    
-        //1st controller right bumper; hook up (that sounds weird)
-        if(xcontroller.getBumperPressed(Hand.kRight))
+        if(xcontroller.getBButtonPressed())
         {
-            
+            if(hookUp)
+            {
+                hook.lower();
+                hookUp = false;
+            }
+            if(!hookUp)
+            {
+                hook.raise();
+                hookUp = true;
+            }
         }
+      
+        
 
         //1st controller left bumper; hook down
         if(xcontroller.getBumperPressed(Hand.kLeft))
@@ -147,6 +160,7 @@ public class Controller{
         {
             shooter.fire(); //kick fuel
         }
+
 
 
         }
