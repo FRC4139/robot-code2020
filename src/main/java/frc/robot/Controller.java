@@ -20,12 +20,12 @@ public class Controller{
     private int wheelPort1, wheelPort2, wheelPort3, wheelPort4;
     private HookExtension hook;
     private int hookPort;
+    private int hookPortTwo;
     private Shooter revShoot;
     private Shooter shooter;
     private int shooterVal;
     private ColorWheel colorWheel;
     private int colorPort = 7;
-    private double colorWheelVal;
     private AHRS ahrs;
     private AnalogInput m_ultrasonic;
     private ColorSensor colorSensor; 
@@ -61,7 +61,7 @@ public class Controller{
 
         intake = new Intake(intakePort);
 
-        hook = new HookExtension(hookPort);
+        hook = new HookExtension(hookPort, hookPortTwo);
 
         colorWheel = new ColorWheel(colorPort, colorSensor);
 
