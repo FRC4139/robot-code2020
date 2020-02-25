@@ -17,7 +17,7 @@ public class Autonomous{
         double frontLeftRotations = wheels.getRotations("fL");
         double backLeftRotations = wheels.getRotations("bR");
         if(position=="left"){ //left
-            if(frontLeftRotations < 0.4914 && backLeftRotations < 0.4914 && segment == 1){ //forward
+            if(frontLeftRotations < 4.17781725616 && backLeftRotations < 4.17781725616 && segment == 1){ //forward
                 wheels.drive(.5, .5);
                 return;
             }
@@ -30,7 +30,7 @@ public class Autonomous{
                 segment++;
                 return;
             }
-            if(frontLeftRotations < /* placeholder */ && backLeftRotations < /* placeholder */ && segment == 2){ //forward
+            if(frontLeftRotations < 0.84405171486 && backLeftRotations < 0.84405171486 && segment == 2){ //forward
                 wheels.drive(.5, .5);
                 return;
             }
@@ -49,7 +49,7 @@ public class Autonomous{
             }
         
         if(position == "mid"){ //mid
-            if(frontLeftRotations < /* placeholder */ && backLeftRotations < /* placeholder */ && segment == 1){ //forward
+            if(frontLeftRotations < 4.17781725616 && backLeftRotations < 4.17781725616 && segment == 1){ //forward
                 wheels.drive(.5, .5);
                 return;
             }
@@ -62,7 +62,7 @@ public class Autonomous{
                 segment++;
                 return;
             }
-            if(frontLeftRotations < /* placeholder */ && backLeftRotations < /* placeholder */ && segment == 2){ //forward
+            if(frontLeftRotations < 7.51158279746 && backLeftRotations < 7.51158279746 && segment == 2){ //forward
                 wheels.drive(.5, .5);
                 return;
             }
@@ -81,7 +81,7 @@ public class Autonomous{
             }
         if(position == "right"){ //right
             
-            if(frontLeftRotations < /* placeholder */ && backLeftRotations < /* placeholder */ && segment == 1){ //forward
+            if(frontLeftRotations < 4.17781725616 && backLeftRotations < 4.17781725616 && segment == 1){ //forward
                 wheels.drive(.5, .5);
                 return;
             }
@@ -94,12 +94,13 @@ public class Autonomous{
                 segment++;
                 return;
             }
-            if(frontLeftRotations < /* placeholder */ && backLeftRotations < /* placeholder */ && segment == 2){ //forward
+            if(frontLeftRotations < 3.3337655413 && backLeftRotations < 3.3337655413 && segment == 2){ //forward
                 wheels.drive(.5, .5);
                 return;
             }
             
-            if(angleFacing>-90){ //turn right
+            if(angleFacing>-
+            90){ //turn right
                 wheels.drive(.5, -.5);
                 return;
             }
@@ -108,10 +109,9 @@ public class Autonomous{
                 segment++;
                 return;
             }
-            shooter.rev();
+            revShoot.charge(0.6);
             shooter.fire();
             }
         }
     }
 
-}
