@@ -3,6 +3,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class Intake {
+
     private WPI_TalonSRX bagMotor;
 
     public Intake(int p1){
@@ -15,3 +16,4 @@ public class Intake {
     }
 
 }
+
