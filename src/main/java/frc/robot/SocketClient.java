@@ -1,5 +1,5 @@
-  
 //package net.ultra03.WebsocketClientTest;
+package frc.robot;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,12 +10,17 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 
-public class Main {
-    static Thread sent;
-    static Thread receive;
-    static Socket socket;
+public class SocketClient {
+    private static Thread sent;
+    private static Thread receive;
+    private static Socket socket;
 
-    public static void main(String args[]){
+    private static class Result {
+        public static String current_result;
+    }
+
+    public static String getVisionStatus(){
+
             try {
                 socket = new Socket("localhost",8888);
             } catch (UnknownHostException e1) {
@@ -23,6 +28,7 @@ public class Main {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
+
             sent = new Thread(new Runnable() {
 
                 @Override
@@ -31,12 +37,13 @@ public class Main {
                         BufferedReader stdIn =new BufferedReader(new InputStreamReader(socket.getInputStream()));
                         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                         // while(true){
+                            out.print("vision_request"+"\r\n");
+                            out.flush();
+                            System.out.println("Message sent");
                             System.out.println("Trying to read...");
-                                String in = stdIn.readLine();
-                                System.out.println(in);
-                                out.print("Try"+"\r\n");
-                                out.flush();
-                                System.out.println("Message sent");
+                            String in = stdIn.readLine();
+                            System.out.println("In: " + in);
+                            Result.current_result = in;
                             // }
 
                     } catch (IOException e) {
@@ -58,6 +65,8 @@ public class Main {
         } catch(IOException e) {
             e.printStackTrace();
         }
+
+        return Result.current_result;
 
     }
 

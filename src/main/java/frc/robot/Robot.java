@@ -87,6 +87,17 @@ public class Robot extends TimedRobot {
         // Put default auto code here
         break;
     }
+
+    String vision = SocketClient.getVisionStatus();
+    if(vision.equalsIgnoreCase("left")) {
+      wheels.drive(-1.0, 1.0);
+    } else if(vision.equalsIgnoreCase("right")) {
+      wheels.drive(1.0, -1.0);
+    } else if(vision.equalsIgnoreCase("center")) {
+      wheels.drive(1.0, 1.0);
+    } else {
+      System.out.println("---------------- VISION ERROR ----------------");
+    }
   }
 
   /**

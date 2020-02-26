@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "CodeLens (Launch) - SocketClient",
+      "request": "launch",
+      "mainClass": "frc.robot.SocketClient",
+      "projectName": "robot-code2020"
+    },
+    {
+      "type": "java",
       "name": "CodeLens (Launch) - vision",
       "request": "launch",
       "mainClass": "frc.robot.vision",
