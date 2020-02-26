@@ -8,15 +8,19 @@ import java.lang.Math;
 
 public class Autonomous{
 
+    public boolean switch1 = false;
+    public boolean switch2 = false;
+    public boolean switch3 = false;
 
     public String position;
     public int segment = 1;
 
-    public void Main(Controller args, Wheels wheels){ //each revolution is 6pi inches
+    public void Main(Controller args, Wheels wheels, Shooter shooter){ //each revolution is 6pi inches
         double angleFacing = args.GetAngleFacing();
         double frontLeftRotations = wheels.getRotations("fL");
         double backLeftRotations = wheels.getRotations("bR");
-        if(position=="left"){ //left
+        
+        if(switch1 = true){ //left
             if(frontLeftRotations < 4.17781725616 && backLeftRotations < 4.17781725616 && segment == 1){ //forward
                 wheels.drive(.5, .5);
                 return;
@@ -44,11 +48,10 @@ public class Autonomous{
                 segment++;
                 return;
             }
-            shooter.rev();
+            shooter.charge(0.6);
             shooter.fire();
-            }
         
-        if(position == "mid"){ //mid
+        if(switch2 = true){ //mid
             if(frontLeftRotations < 4.17781725616 && backLeftRotations < 4.17781725616 && segment == 1){ //forward
                 wheels.drive(.5, .5);
                 return;
@@ -76,10 +79,10 @@ public class Autonomous{
                 segment++;
                 return;
             }
-            shooter.rev();
+            shooter.charge(0.6);
             shooter.fire();
             }
-        if(position == "right"){ //right
+        if(switch3 = true){ //right
             
             if(frontLeftRotations < 4.17781725616 && backLeftRotations < 4.17781725616 && segment == 1){ //forward
                 wheels.drive(.5, .5);
@@ -109,9 +112,10 @@ public class Autonomous{
                 segment++;
                 return;
             }
-            revShoot.charge(0.6);
+            shooter.charge(0.6);
             shooter.fire();
             }
         }
     }
+}
 
