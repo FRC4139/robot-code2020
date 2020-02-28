@@ -101,23 +101,23 @@ def vision():
 
 def receive_message(s):
     print("accepting")
-    conn, addr = s.accept()
+    conn, addr = s.accept() # waits for a client to connect
     '''
     conn.send(bytes("Message"+"\r\n",'UTF-8'))
     print("Message sent")
     '''
 
     print("receiving")
-    data = conn.recv(1024)
+    data = conn.recv(1024) # receives message from client
     print("decoding and printing")
     print(data.decode(encoding='UTF-8'))
 
-    string = data.decode(encoding='UTF-8')
-    if string == "vision_request\r\n":
-        result = vision()
-        conn.send(bytes(result+"\r\n", 'UTF-8'))
+    string = data.decode(encoding='UTF-8') # decodes raw bytes
+    if string == "vision_request\r\n": # checks if the client string is "vision_request"
+        result = vision() # gets result (right, left, center -- needs optimization)
+        conn.send(bytes(result+"\r\n", 'UTF-8')) # sends the result back to the client
     else:
-        conn.send(bytes("invalid request\r\n", 'UTF-8'))
+        conn.send(bytes("invalid request\r\n", 'UTF-8')) # client didn't request vision processing
 
 try:
     while True:
