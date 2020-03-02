@@ -27,6 +27,7 @@ public class Controller{
     private int wheelPort1, wheelPort2, wheelPort3, wheelPort4;
     //private HookExtension hook;
     private int hookPort;
+    private Shooter revShoot;
     private Shooter shooter;
     private int shooterVal;
     private ColorWheel colorWheel;
@@ -186,4 +187,8 @@ public class Controller{
     public double getAngleFacing() {
         return ahrs.getAngle();
     }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 68097d557054ab1d8a4cd263fc0d874a040228af
 }

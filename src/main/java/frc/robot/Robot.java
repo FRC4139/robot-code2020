@@ -84,7 +84,7 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     switch (m_autoSelected) {
       case kCustomAuto:
-        autonomous.Main(masterController, masterController.wheels);
+        autonomous.Main(masterController, masterController.wheels, null);
         break;
       case kDefaultAuto:
       default:
