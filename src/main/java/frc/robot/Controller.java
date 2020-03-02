@@ -11,7 +11,7 @@ public class Controller{
 
     //main controller
     private XboxController controller1;
-    public Wheels wheels;
+    private Wheels wheels;
     //controller for color spinner
     private int intakeVal;
     private XboxController controller2;
@@ -183,10 +183,7 @@ public class Controller{
         return m_ultrasonic.getValue()*0.125f/2.54f;
     }
 
-    public double GetAngleFacing() {
+    public double getAngleFacing() {
         return ahrs.getAngle();
-    }
-    public double getRotations() {
-        return wheels.getRotations("fL");
     }
 }
