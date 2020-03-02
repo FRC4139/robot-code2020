@@ -4,25 +4,25 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class Shooter
 {
-    private WPI_TalonSRX shoot1;
-    private WPI_TalonSRX shoot2;
+    private WPI_TalonSRX blue;
+    private WPI_TalonSRX big;
     
 
-    public Shooter(int p1, int p2, int p3)
+    public Shooter(int p1, int p2)
     {
-        shoot1 = new WPI_TalonSRX(p1);
-        shoot2 = new WPI_TalonSRX(p2);
+        blue = new WPI_TalonSRX(p1);
+        big = new WPI_TalonSRX(p2);
   
     }
 
     public void charge(double val)
     {
-        shoot1.set(val);
+        blue.set(val);
     }
 
 
-    public void fire()
+    public void fire(double val)
     {
-        shoot2.set(0.2);
+        big.set(val);
     }
 }

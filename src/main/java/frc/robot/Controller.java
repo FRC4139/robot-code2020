@@ -21,9 +21,9 @@ public class Controller{
     private HookExtension hook;
     private int hookPort;
     private int hookPortTwo;
-    private Shooter revShoot;
+    private int shooterPortOne, shooterPortTwo;
+    //private Shooter revShoot;
     private Shooter shooter;
-    private int shooterVal;
     private ColorWheel colorWheel;
     private int colorPort = 7;
     private AHRS ahrs;
@@ -51,6 +51,7 @@ public class Controller{
         colorSensor = new ColorSensor();
         colorServo = new Servo(0); // UPDATE PORT ACCORDINGLY
         colorServo.set(0);
+        shooter = new Shooter(shooterPortOne, shooterPortTwo);
         //intakePort = ;
         //hookPort = ;
         //shooterVal = ;
@@ -152,13 +153,17 @@ public class Controller{
         //left trigger; revs up shooter
         if(xcontroller.getTriggerAxis(Hand.kLeft)>.1)
         {
-            revShoot.charge(0.6);
+            shooter.charge(-0.4); //blue wheel
+        } else {
+            shooter.charge(0);
         }
         // right trigger; controls shooter
         
         if(xcontroller.getTriggerAxis(Hand.kRight)>.1 && xcontroller.getTriggerAxis(Hand.kLeft)>.1)
         {
-            shooter.fire(); //kick fuel
+            shooter.fire(0.6); //big wheel
+        } else {
+            shooter.fire(0);
         }
 
 
