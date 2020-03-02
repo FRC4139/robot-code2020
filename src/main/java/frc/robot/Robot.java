@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     controller1 = new XboxController(0);
     //controller2 = new XboxController(1);
-    wheels = new Wheels(4, 3, 2, 1);
+    wheels = new Wheels(14, 12, 8, 9);
   }
 
   /**

@@ -55,10 +55,10 @@ public class Wheels {
         {
             //makes sure speeds are positive
             //wheels.tankDrive(Math.abs(leftSpeed), Math.abs(rightSpeed));
-            frontLeft.set(leftSpeed*.5);
-            backLeft.set(leftSpeed*.5);
-            frontRight.set(-rightSpeed*.5);
-            backRight.set(rightSpeed*.5);
+            frontLeft.set(-leftSpeed);
+            backLeft.set(-leftSpeed);
+            frontRight.set(-rightSpeed);
+            backRight.set(rightSpeed);
         }
     }
     public void inverse()
