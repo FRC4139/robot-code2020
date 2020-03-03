@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SPI;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Servo;
 public class Controller{
@@ -37,6 +38,8 @@ public class Controller{
     private Boolean colorServoDeployed = false; 
     public Boolean spunTillThree = false;
     private Servo colorServo; 
+    private PWMVictorSPX victorMotors;
+    
 
     public void controllerInit()
     {
@@ -58,10 +61,11 @@ public class Controller{
         //colorWheelVal = ;
         //visionParam = ;
         //vision = new Vision(visionParam);
+        //input 3 ports for victorspx construction
+        victorMotors = new PWMVictorSPX();
 
         intake = new Intake(intakePort);
 
-        hook = new HookExtension(hookPort);
 
         colorWheel = new ColorWheel(colorPort, colorSensor);
 
