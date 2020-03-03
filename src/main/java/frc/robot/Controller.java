@@ -184,7 +184,7 @@ public class Controller{
         return m_ultrasonic.getValue()*0.125f/2.54f;
     }
 
-    public double getAngleFacing() {
+    public double GetAngleFacing() {
         return ahrs.getAngle();
     }
 <<<<<<< HEAD
