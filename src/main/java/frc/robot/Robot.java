@@ -8,6 +8,7 @@
 //TESTING MY BRANCH lk
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -45,7 +46,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     controller1 = new XboxController(0);
     //controller2 = new XboxController(1);
-    wheels = new Wheels(14, 12, 8, 9);
+    wheels = new Wheels(1, 2, 3, 4);
+    CameraServer.getInstance().startAutomaticCapture(0);
   }
 
   /**
@@ -99,7 +101,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    wheels.drive(controller1.getY(Hand.kLeft), controller1.getY(Hand.kRight));
+    //wheels.drive(controller1.getY(Hand.kLeft), controller1.getY(Hand.kRight));
     masterController.UpdateTeleop();
     //SmartDashboard.putString("[left joystick] ", "value: " + controller.getY(Hand.kLeft));
     //SmartDashboard.putString("[right joystick] ", "value: " + controller.getY(Hand.kRight));

@@ -42,10 +42,15 @@ public class Controller{
     {
         ahrs = new AHRS(SPI.Port.kMXP);
         m_ultrasonic = new AnalogInput(0);
-        //wheelPort1 = wheelPort1;
-        //wheelPort2 = wheelPort2;
-        //wheelPort3 = wheelPort3;
-        //wheelPort4 = wheelPort4;
+        wheelPort1 = 1;
+        wheelPort2 = 2;
+        wheelPort3 = 3;
+        wheelPort4 = 4;
+        intakePort = 5;
+        shooterPortOne = 7;
+        shooterPortTwo = 6;
+        colorPort = 8;
+        // fL, fR, bL, bR
         wheels = new Wheels(wheelPort1, wheelPort2, wheelPort3, wheelPort4);
         xcontroller = new XboxController(0);
         colorSensor = new ColorSensor();
@@ -143,13 +148,14 @@ public class Controller{
         //1st controller left bumper; hook down
         if(xcontroller.getBumperPressed(Hand.kLeft))
         {
-            intake.drive(intakeVal);
+            intake.drive(-.85);
+        }
+        if(xcontroller.getBumperReleased(Hand.kLeft))
+        {
+            intake.drive(0);
         }
         //inverse wheels
-        if(xcontroller.getXButtonPressed())
-        {
-            //vision something
-        }
+     
         //left trigger; revs up shooter
         if(xcontroller.getTriggerAxis(Hand.kLeft)>.1)
         {
@@ -159,7 +165,7 @@ public class Controller{
         }
         // right trigger; controls shooter
         
-        if(xcontroller.getTriggerAxis(Hand.kRight)>.1 && xcontroller.getTriggerAxis(Hand.kLeft)>.1)
+        if(xcontroller.getTriggerAxis(Hand.kRight)>0)
         {
             shooter.fire(0.6); //big wheel
         } else {
