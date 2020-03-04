@@ -31,6 +31,8 @@ public class Robot extends TimedRobot {
   //private XboxController controller2;
   private Controller masterController; 
   private Wheels wheels;
+  
+  private Vision vision;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -46,6 +48,7 @@ public class Robot extends TimedRobot {
     controller1 = new XboxController(0);
     //controller2 = new XboxController(1);
     wheels = new Wheels(14, 12, 8, 9);
+    vision = new Vision(112, 114, 255, 67, 51, 0);
   }
 
   /**
@@ -86,6 +89,20 @@ public class Robot extends TimedRobot {
     switch (m_autoSelected) {
       case kCustomAuto:
         // Put custom auto code here
+        String direction = vision.checkDirection();
+        if(direction.equalsIgnoreCase("left")) {
+          wheels.drive(-1.0, 1.0);
+        } else if(direction.equalsIgnoreCase("right")) {
+          wheels.drive(1.0, -1.0);
+        } else if(direction.equalsIgnoreCase("center")) {
+          wheels.drive(1.0, 1.0);
+        } else if(direction.equalsIgnoreCase("ERROR")) {
+          System.out.println("!!!!!!!! VISION ERROR !!!!!!!!");
+          System.out.println("Error in calculations");
+        } else {
+          System.out.println("!!!!!!!! VISION ERROR !!!!!!!!");
+          System.out.println("bruh??");
+        }
         break;
       case kDefaultAuto:
       default:
