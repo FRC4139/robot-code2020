@@ -6,7 +6,6 @@ public class HookExtension
 {
     private WPI_TalonSRX motor1;
     private WPI_TalonSRX motor2;
-
     //port 1 place holder
     public HookExtension(int port1, int port2)
      {
@@ -17,8 +16,8 @@ public class HookExtension
     //lowers hook
     public void lower()
     {
-            motor1.set(-.75);
-            motor2.set(-.75);
+        motor1.set(-.75);
+        motor2.set(-.75);
     }
 
     //raises hook
@@ -26,4 +25,10 @@ public class HookExtension
     {
         motor1.set(.75);
     }
+
+    public void stop() {
+        motor1.set(0);
+        motor2.set(0);
+    }
+
 }

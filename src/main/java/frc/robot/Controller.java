@@ -92,7 +92,9 @@ public class Controller{
         SmartDashboard.putBoolean("servo deployed", colorServoDeployed);
         SmartDashboard.putBoolean("spun 3 times", spunTillThree);
         SmartDashboard.putString("gdata", desiredColor);
+
         wheels.drive(xcontroller.getY(Hand.kLeft), xcontroller.getY(Hand.kRight));
+        
         if (xcontroller.getAButtonPressed() || colorWheel.spinNextFrame)
         {
             if (colorServoDeployed) {
@@ -135,6 +137,10 @@ public class Controller{
                 hook.raise();
                 hookUp = true;
             }
+        }
+
+        if (xcontroller.getBButtonReleased()) {
+            hook.stop();
         }
       
         
