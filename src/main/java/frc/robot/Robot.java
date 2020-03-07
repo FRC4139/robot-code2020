@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.ctre.phoenix.motorcontrol.can.*;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,6 +34,7 @@ public class Robot extends TimedRobot {
   //private XboxController controller2;
   private Controller masterController; 
   private Wheels wheels;
+  private WPI_TalonSRX testMotor;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -46,8 +49,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     controller1 = new XboxController(0);
     //controller2 = new XboxController(1);
-    wheels = new Wheels(1, 2, 3, 4);
+    wheels = new Wheels(1, 2, 3, 4,5,6);
     CameraServer.getInstance().startAutomaticCapture(0);
+    testMotor = new WPI_TalonSRX(2);
+
   }
 
   /**
@@ -101,12 +106,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    //wheels.drive(controller1.getY(Hand.kLeft), controller1.getY(Hand.kRight));
-    masterController.UpdateTeleop();
+    wheels.drive(controller1.getY(Hand.kLeft), controller1.getY(Hand.kRight));
+    //masterController.UpdateTeleop();
     //SmartDashboard.putString("[left joystick] ", "value: " + controller.getY(Hand.kLeft));
     //SmartDashboard.putString("[right joystick] ", "value: " + controller.getY(Hand.kRight));
     //SmartDashboard.putString("Position of mag encoder", "value: " + wheels.getRotations("fL"));
-  
+    //testMotor.set(1);
   }
 
   /**
@@ -114,5 +119,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+    
   }
 }

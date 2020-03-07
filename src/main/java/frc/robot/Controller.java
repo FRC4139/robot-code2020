@@ -42,21 +42,15 @@ public class Controller{
     {
         ahrs = new AHRS(SPI.Port.kMXP);
         m_ultrasonic = new AnalogInput(0);
-        wheelPort1 = 1;
-        wheelPort2 = 2;
-        wheelPort3 = 3;
-        wheelPort4 = 4;
-        intakePort = 5;
-        shooterPortOne = 7;
-        shooterPortTwo = 6;
-        colorPort = 8;
+      
+  
         // fL, fR, bL, bR
-        wheels = new Wheels(wheelPort1, wheelPort2, wheelPort3, wheelPort4);
+        wheels = new Wheels(1,2,3,4,5,6);
         xcontroller = new XboxController(0);
         colorSensor = new ColorSensor();
         colorServo = new Servo(0); // UPDATE PORT ACCORDINGLY
         colorServo.set(0);
-        shooter = new Shooter(shooterPortOne, shooterPortTwo);
+        shooter = new Shooter(8, 9);
         //intakePort = ;
         //hookPort = ;
         //shooterVal = ;
@@ -65,11 +59,11 @@ public class Controller{
         //visionParam = ;
         //vision = new Vision(visionParam);
 
-        intake = new Intake(intakePort);
+        intake = new Intake(7);
 
-        hook = new HookExtension(hookPort, hookPortTwo);
+        hook = new HookExtension(11,12);
 
-        colorWheel = new ColorWheel(colorPort, colorSensor);
+        colorWheel = new ColorWheel(10, colorSensor);
 
         // colorArm = new ColorArm(servoPWMChannel);
 
