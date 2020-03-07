@@ -31,11 +31,7 @@ public class Vision {
         highS = lowSaturation + sRange;
         val = lowValue - vRange;
         highV = lowValue + vRange;
-        try {
-            cap = new VideoCapture(0);
-        } catch(UnsatisfiedLinkError e) {
-            e.printStackTrace();
-        }
+        cap = new VideoCapture(0);
         if(!cap.isOpened()) {
             System.out.println("!!!!!!!! VISION ERROR !!!!!!!!");
             System.out.println("Could not open VideoCapture");
