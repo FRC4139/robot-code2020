@@ -9,7 +9,7 @@ public class VisionComp
     {
         signal = input;
         // 1 2 3 4 are place holders for tallon ports
-        controll = new Wheels(1,2,3,4,5,6);
+        controll = new Wheels(1,2,3,4);
     }
     
     public void check()

@@ -45,7 +45,7 @@ public class Controller{
       
   
         // fL, fR, bL, bR
-        wheels = new Wheels(1,2,3,4,5,6);
+        wheels = new Wheels(1,2,3,4);
         xcontroller = new XboxController(0);
         colorSensor = new ColorSensor();
         colorServo = new Servo(0); // UPDATE PORT ACCORDINGLY

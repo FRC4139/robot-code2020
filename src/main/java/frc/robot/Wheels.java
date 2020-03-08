@@ -10,17 +10,16 @@ import com.ctre.phoenix.motorcontrol.can.*;
 
 public class Wheels {
 
-    private WPI_TalonSRX frontLeft, backLeft, frontRight, backRight, midRight, midLeft;
+    private WPI_TalonSRX frontLeft, backLeft, frontRight, backRight;
     //private DifferentialDrive wheels;
     private boolean inverseState;
 
-    public Wheels(int fL, int bL, int mL, int fR, int bR, int mR) {
+    public Wheels(int fL, int bL, int fR, int bR) {
         frontLeft = new WPI_TalonSRX(fL);
         backLeft = new WPI_TalonSRX(bL);
         frontRight = new WPI_TalonSRX(fR);
         backRight = new WPI_TalonSRX(bR);
-        midLeft = new WPI_TalonSRX(mL);
-        midRight = new WPI_TalonSRX(mR);
+       
         inverseState = false;
         //frontLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
         //backRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
@@ -64,10 +63,10 @@ public class Wheels {
             //wheels.tankDrive(Math.abs(leftSpeed), Math.abs(rightSpeed));
             frontLeft.set(-leftSpeed);
             backLeft.set(-leftSpeed);
-            midLeft.set(-leftSpeed);
+            
             frontRight.set(rightSpeed);
             backRight.set(rightSpeed);
-            midRight.set(rightSpeed);
+       
         }
     }
     public void inverse()

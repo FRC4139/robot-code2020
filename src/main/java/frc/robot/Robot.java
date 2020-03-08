@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     controller1 = new XboxController(0);
     //controller2 = new XboxController(1);
-    wheels = new Wheels(1, 2, 3, 4,5,6);
+    wheels = new Wheels(1, 2, 3, 4);
     CameraServer.getInstance().startAutomaticCapture(0);
     testMotor = new WPI_TalonSRX(2);
 
