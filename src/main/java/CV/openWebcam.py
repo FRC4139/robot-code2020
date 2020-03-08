@@ -1,9 +1,14 @@
 import numpy as np
 import cv2
+import RPi.GPIO as GPIO
 
 
 def nothing(x):
     pass
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(16, GPIO.OUT)
+GPIO.setup(8, GPIO.OUT)
 
 cap = cv2.VideoCapture(1)
 
@@ -58,10 +63,14 @@ while (True):
         # cv2.circle(mask, (int(x), int(y)), int(radius), color[, thickness[, lineType[, shift]]])
         if(center_x > (frame_center+threshold)):
             print("left")
+            GPIO.output(16, GPIO.LOW)
         if(center_x < (frame_center-threshold)):
             print("right")
+            GPIO.output(8, GPIO.LOW)
         if(center_x > (frame_center-threshold) and center_x < (frame_center+threshold)):
             print("center")
+            GPIO.output(16, GPIO.LOW)
+            GPIO.output(8, GPIO.LOW)
 
     #displaying what the program is seeing
     cv2.imshow("Frame", frame)
@@ -78,3 +87,6 @@ while (True):
 # When everything done, release the capture
 cap.release()
 cv2.destroyAllWindows()
+GPIO.output(16, GPIO.HIGH)
+GPIO.output(8, GPIO.HIGH)
+GPIO.cleanup()
