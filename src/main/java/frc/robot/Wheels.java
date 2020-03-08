@@ -66,7 +66,6 @@ public class Wheels {
     }
     public void inverse()
     {
-        //reverses inverse everytime pressed
         inverseState = !inverseState;
-    }
-}
+    }}       //reverses inverse everytime pressed
+        
