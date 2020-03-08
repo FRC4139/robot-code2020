@@ -106,8 +106,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    wheels.drive(controller1.getY(Hand.kLeft), controller1.getY(Hand.kRight));
-    //masterController.UpdateTeleop();
+    //wheels.drive(controller1.getY(Hand.kLeft), controller1.getY(Hand.kRight));
+    masterController.UpdateTeleop();
     //SmartDashboard.putString("[left joystick] ", "value: " + controller.getY(Hand.kLeft));
     //SmartDashboard.putString("[right joystick] ", "value: " + controller.getY(Hand.kRight));
     //SmartDashboard.putString("Position of mag encoder", "value: " + wheels.getRotations("fL"));
