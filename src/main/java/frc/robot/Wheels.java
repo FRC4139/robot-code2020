@@ -43,16 +43,14 @@ public class Wheels {
 
     // Negative speed turns wheels backwards
     public void drive(double leftSpeed, double rightSpeed) {
-        
-        leftSpeed = 0.7 * leftSpeed;
-        rightSpeed = 0.7 * rightSpeed;
 
         if(inverseState)
         {
             //if inversState is true, reverse the speeds and call drive 
-            leftSpeed = leftSpeed*-1;
-            rightSpeed = rightSpeed*-1;
-            //wheels.tankDrive(leftSpeed, rightSpeed);
+            frontLeft.set(-leftSpeed);
+            backLeft.set(-leftSpeed);
+            frontRight.set(rightSpeed);
+            backRight.set(rightSpeed);
         }
         else
         {
@@ -60,7 +58,7 @@ public class Wheels {
             //wheels.tankDrive(Math.abs(leftSpeed), Math.abs(rightSpeed));
             frontLeft.set(-leftSpeed);
             backLeft.set(-leftSpeed);
-            frontRight.set(-rightSpeed);
+            frontRight.set(rightSpeed);
             backRight.set(rightSpeed);
         }
     }

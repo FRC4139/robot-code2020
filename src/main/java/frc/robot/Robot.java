@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
   private Wheels wheels;
   
   
-  private DIO right, left;
+  private DIO dio0, dio1;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -48,9 +48,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     controller1 = new XboxController(0);
     //controller2 = new XboxController(1);
-    wheels = new Wheels(14, 12, 8, 9);
-    right = new DIO(0);
-    left = new DIO(1); 
+    wheels = new Wheels(6, 8, 3, 1);
+    dio0 = new DIO(0);
+    dio1 = new DIO(1);
+    // left = new DIO(1); 
     
   }
 
@@ -64,6 +65,19 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    boolean firstOn = dio0.getDIOstatus();
+    if(firstOn) {
+      System.out.println("dio 0 on");
+    } else {
+      System.out.println("dio 0 off");
+    }
+
+    boolean secondOn = dio1.getDIOstatus();
+    if(secondOn) {
+      System.out.println("dio 1 on");
+    } else {
+      System.out.println("dio 1 off");
+    }
   }
 
   /**
@@ -89,8 +103,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-      SmartDashboard.putBoolean("right", right.getDIOstatus());
-      SmartDashboard.putBoolean("left", left.getDIOstatus());  
+      //SmartDashboard.putBoolean("right", right.getDIOstatus());
+      //SmartDashboard.putBoolean("left", left.getDIOstatus());  
   }
 
   /**

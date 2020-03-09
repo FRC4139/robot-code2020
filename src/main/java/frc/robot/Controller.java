@@ -42,16 +42,15 @@ public class Controller{
     {
         ahrs = new AHRS(SPI.Port.kMXP);
         m_ultrasonic = new AnalogInput(0);
-        //wheelPort1 = wheelPort1;
-        //wheelPort2 = wheelPort2;
-        //wheelPort3 = wheelPort3;
-        //wheelPort4 = wheelPort4;
-        wheels = new Wheels(wheelPort1, wheelPort2, wheelPort3, wheelPort4);
+      
+  
+        // fL, fR, bL, bR
+        wheels = new Wheels(6,8,3,1);
         xcontroller = new XboxController(0);
         colorSensor = new ColorSensor();
         colorServo = new Servo(0); // UPDATE PORT ACCORDINGLY
         colorServo.set(0);
-        shooter = new Shooter(shooterPortOne, shooterPortTwo);
+        shooter = new Shooter(7, 4);
         //intakePort = ;
         //hookPort = ;
         //shooterVal = ;
@@ -60,11 +59,11 @@ public class Controller{
         //visionParam = ;
         //vision = new Vision(visionParam);
 
-        intake = new Intake(intakePort);
+        intake = new Intake(2);
 
-        hook = new HookExtension(hookPort, hookPortTwo);
+        hook = new HookExtension(11,12);
 
-        colorWheel = new ColorWheel(colorPort, colorSensor);
+        colorWheel = new ColorWheel(10, colorSensor);
 
         // colorArm = new ColorArm(servoPWMChannel);
 
@@ -93,13 +92,17 @@ public class Controller{
         SmartDashboard.putBoolean("servo deployed", colorServoDeployed);
         SmartDashboard.putBoolean("spun 3 times", spunTillThree);
         SmartDashboard.putString("gdata", desiredColor);
+
         wheels.drive(xcontroller.getY(Hand.kLeft), xcontroller.getY(Hand.kRight));
+        
         if (xcontroller.getAButtonPressed() || colorWheel.spinNextFrame)
         {
             if (colorServoDeployed) {
                 //System.out.println("Spun till 3? " + spunTillThree.toString());
                 if (!spunTillThree) {
                     colorWheel.spinUntilThree(this);
+                    colorServo.set(-0.5);
+                    colorServoDeployed = false;
                     /*
                     SmartDashboard.putBoolean("spin 3", true);
                     SmartDashboard.putBoolean("spin color", false);
@@ -107,6 +110,8 @@ public class Controller{
                     */
                 } else {
                     colorWheel.spinToColor(desiredColor);
+                    colorServo.set(-0.5);
+                    colorServoDeployed = false;
                     /*
                     SmartDashboard.putBoolean("spin 3", false);
                     SmartDashboard.putBoolean("spin color", true);
@@ -137,31 +142,38 @@ public class Controller{
                 hookUp = true;
             }
         }
+
+        /*
+        if (xcontroller.getBButtonReleased()) {
+            hook.stop();
+        }
+        */
       
         
 
         //1st controller left bumper; hook down
-        if(xcontroller.getBumperPressed(Hand.kLeft))
+        if(xcontroller.getXButtonPressed(/*Hand.kLeft*/))
         {
-            intake.drive(intakeVal);
+            intake.drive(.85);
+        }
+        if(xcontroller.getXButtonReleased(/*Hand.kLeft*/))
+        {
+            intake.drive(0);
         }
         //inverse wheels
-        if(xcontroller.getXButtonPressed())
-        {
-            //vision something
-        }
+     
         //left trigger; revs up shooter
         if(xcontroller.getTriggerAxis(Hand.kLeft)>.1)
         {
-            shooter.charge(-0.4); //blue wheel
+            shooter.charge(0.4); //blue wheel
         } else {
             shooter.charge(0);
         }
         // right trigger; controls shooter
         
-        if(xcontroller.getTriggerAxis(Hand.kRight)>.1 && xcontroller.getTriggerAxis(Hand.kLeft)>.1)
+        if(xcontroller.getTriggerAxis(Hand.kRight)>0)
         {
-            shooter.fire(0.6); //big wheel
+            shooter.fire(-0.6); //big wheel
         } else {
             shooter.fire(0);
         }
