@@ -8,6 +8,7 @@
 //TESTING MY BRANCH lk
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -27,13 +28,13 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
-  private XboxController controller1;
+  //private XboxController controller1;
   //private XboxController controller2;
   private Controller masterController; 
-  private Wheels wheels;
+  //private Wheels wheels;
   
   
-  private DIO dio0, dio1;
+  //private DIO dio0, dio1;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -46,12 +47,14 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    controller1 = new XboxController(0);
+    //controller1 = new XboxController(0);
     //controller2 = new XboxController(1);
-    wheels = new Wheels(6, 8, 3, 1);
-    dio0 = new DIO(0);
-    dio1 = new DIO(1);
+    //wheels = new Wheels(6, 8, 3, 1);
+    //dio0 = new DIO(0);
+    //dio1 = new DIO(1);
     // left = new DIO(1); 
+    CameraServer.getInstance().startAutomaticCapture(0);
+
     
   }
 
@@ -65,6 +68,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    /*
     boolean firstOn = dio0.getDIOstatus();
     if(firstOn) {
       System.out.println("dio 0 on");
@@ -76,8 +80,8 @@ public class Robot extends TimedRobot {
     if(secondOn) {
       System.out.println("dio 1 on");
     } else {
-      System.out.println("dio 1 off");
-    }
+      System.out.println("dio 1 off"); 
+    } */
   }
 
   /**
@@ -103,8 +107,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-      //SmartDashboard.putBoolean("right", right.getDIOstatus());
-      //SmartDashboard.putBoolean("left", left.getDIOstatus());  
+      masterController.UpdateAutonomous();
   }
 
   /**
@@ -112,7 +115,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    wheels.drive(controller1.getY(Hand.kLeft), controller1.getY(Hand.kRight));
+    //wheels.drive(controller1.getY(Hand.kLeft), controller1.getY(Hand.kRight));
     masterController.UpdateTeleop();
     //SmartDashboard.putString("[left joystick] ", "value: " + controller.getY(Hand.kLeft));
     //SmartDashboard.putString("[right joystick] ", "value: " + controller.getY(Hand.kRight));
