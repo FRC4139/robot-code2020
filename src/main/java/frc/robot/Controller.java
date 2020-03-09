@@ -70,7 +70,7 @@ public class Controller{
 
         intake = new Intake(2);
 
-        hook = new HookExtension(11,12);
+        hook = new HookExtension(11);
 
         colorWheel = new ColorWheel(5, colorSensor);
 
@@ -101,7 +101,8 @@ public class Controller{
         SmartDashboard.putBoolean("servo deployed", colorServoDeployed);
         SmartDashboard.putBoolean("spun 3 times", spunTillThree);
         SmartDashboard.putString("gdata", desiredColor);
-
+        SmartDashboard.putNumber("ultra sonic reading", getUltraSonicReading());
+        SmartDashboard.putNumber("angle facing", getAngleFacing());
         wheels.drive(xcontroller.getY(Hand.kLeft), xcontroller.getY(Hand.kRight));
         
         if (xcontroller.getAButtonPressed() || colorWheel.spinNextFrame)
@@ -167,6 +168,7 @@ public class Controller{
 
         
         if(xcontroller.getBumperPressed(Hand.kLeft))
+        {
             intake.drive(0.85);
         }
         if(xcontroller.getBumperReleased(Hand.kLeft))
@@ -175,6 +177,7 @@ public class Controller{
         }
   
         if(xcontroller.getBumperPressed(Hand.kRight))
+        {
             intake.drive(-0.85);
         }
         if(xcontroller.getBumperReleased(Hand.kRight))
@@ -186,7 +189,7 @@ public class Controller{
         //left trigger; revs up shooter
         if(xcontroller.getTriggerAxis(Hand.kLeft)>.1)
         {
-            shooter.charge(0.4); //blue wheel
+            shooter.charge(0.8); //big wheel
         } else {
             shooter.charge(0);
         }
@@ -194,7 +197,7 @@ public class Controller{
         
         if(xcontroller.getTriggerAxis(Hand.kRight)>0)
         {
-            shooter.fire(-0.6); //big wheel
+            shooter.fire(-0.4); //blue wheel
         } else {
             shooter.fire(0);
         }
