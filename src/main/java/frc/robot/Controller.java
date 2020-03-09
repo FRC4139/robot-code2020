@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.SPI;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Servo;
 public class Controller{
     // THE VALUES FOR THE DOUBLES BELOW NEED TO BE CONFIGURED MANUALLY
@@ -37,6 +38,9 @@ public class Controller{
     private Boolean colorServoDeployed = false; 
     public Boolean spunTillThree = false;
     private Servo colorServo; 
+    private VisionComp visionComp;
+
+    private DigitalInput dioOne, dioTwo;
 
     public void controllerInit()
     {
@@ -45,12 +49,13 @@ public class Controller{
       
   
         // fL, fR, bL, bR
-        wheels = new Wheels(1,2,3,4);
+        wheels = new Wheels(6,8,3,1);
         xcontroller = new XboxController(0);
         colorSensor = new ColorSensor();
         colorServo = new Servo(0); // UPDATE PORT ACCORDINGLY
         colorServo.set(0);
-        shooter = new Shooter(8, 9);
+        shooter = new Shooter(7, 4);
+        visionComp = new VisionComp();
         //intakePort = ;
         //hookPort = ;
         //shooterVal = ;
@@ -59,14 +64,18 @@ public class Controller{
         //visionParam = ;
         //vision = new Vision(visionParam);
 
-        intake = new Intake(7);
+
+        dioOne = new DigitalInput(0);
+        dioTwo = new DigitalInput(1);
+
+        intake = new Intake(2);
 
         hook = new HookExtension(11,12);
 
-        colorWheel = new ColorWheel(10, colorSensor);
+        colorWheel = new ColorWheel(5, colorSensor);
 
         // colorArm = new ColorArm(servoPWMChannel);
-
+        spunTillThree = false;
         hookUp = false;
     }
     
@@ -97,10 +106,16 @@ public class Controller{
         
         if (xcontroller.getAButtonPressed() || colorWheel.spinNextFrame)
         {
+            //System.out.println("a button pressed is " + xcontroller.getAButtonPressed() + "while the spin next frame is " + colorWheel.spinNextFrame);
             if (colorServoDeployed) {
                 //System.out.println("Spun till 3? " + spunTillThree.toString());
                 if (!spunTillThree) {
                     colorWheel.spinUntilThree(this);
+                    if (colorWheel.spinNextFrame == false) {
+                        colorServo.set(0);
+                        colorServoDeployed = false;
+                    }
+                    
                     /*
                     SmartDashboard.putBoolean("spin 3", true);
                     SmartDashboard.putBoolean("spin color", false);
@@ -108,13 +123,17 @@ public class Controller{
                     */
                 } else {
                     colorWheel.spinToColor(desiredColor);
+                    if (colorWheel.spinNextFrame == false) {
+                        colorServo.set(0);
+                        colorServoDeployed = false;
+                    }
                     /*
                     SmartDashboard.putBoolean("spin 3", false);
                     SmartDashboard.putBoolean("spin color", true);
                     System.out.println("spinning to color"); */
                 }
             } else {
-                colorServo.set(0.5);
+                colorServo.set(1);
                 colorServoDeployed = true;
             }
             
@@ -139,18 +158,26 @@ public class Controller{
             }
         }
 
+
         if (xcontroller.getBButtonReleased()) {
             hook.stop();
         }
-      
+     
         
 
-        //1st controller left bumper; hook down
+        
         if(xcontroller.getBumperPressed(Hand.kLeft))
-        {
-            intake.drive(-.85);
+            intake.drive(0.85);
         }
         if(xcontroller.getBumperReleased(Hand.kLeft))
+        {
+            intake.drive(0);
+        }
+  
+        if(xcontroller.getBumperPressed(Hand.kRight))
+            intake.drive(-0.85);
+        }
+        if(xcontroller.getBumperReleased(Hand.kRight))
         {
             intake.drive(0);
         }
@@ -159,7 +186,7 @@ public class Controller{
         //left trigger; revs up shooter
         if(xcontroller.getTriggerAxis(Hand.kLeft)>.1)
         {
-            shooter.charge(-0.4); //blue wheel
+            shooter.charge(0.4); //blue wheel
         } else {
             shooter.charge(0);
         }
@@ -167,7 +194,7 @@ public class Controller{
         
         if(xcontroller.getTriggerAxis(Hand.kRight)>0)
         {
-            shooter.fire(0.6); //big wheel
+            shooter.fire(-0.6); //big wheel
         } else {
             shooter.fire(0);
         }
@@ -175,6 +202,33 @@ public class Controller{
 
 
         }
+
+
+    public void UpdateAutonomous() {
+        
+    }
+
+    public void AutonomousTurnCheck() {
+        if (!dioOne.get() && !dioTwo.get()) {
+            visionComp.compute(2); // straight
+            return;
+        }
+        
+        if (!dioOne.get()) {
+            visionComp.compute(0); // left
+            return;
+        }
+        if (!dioTwo.get()) {
+            visionComp.compute(1); //  right
+            return;
+        } 
+
+        if (dioOne.get() && dioTwo.get()) 
+        {
+            visionComp.compute(3); // none
+            return;
+        }
+    }
 
     public double getUltraSonicReading()
     {
