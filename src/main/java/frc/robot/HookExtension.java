@@ -1,6 +1,7 @@
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+//import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 public class HookExtension
 {
@@ -12,13 +13,14 @@ public class HookExtension
      {
         motor1 = new WPI_TalonSRX(port1);
         //motor2 = new WPI_TalonSRX(port2);
+
     }
     
     //lowers hook
     public void lower()
     {
-            motor1.set(-.75);
-            //motor2.set(-.75);
+        motor1.set(-.75);
+        //motor2.set(-.75);
     }
 
     //raises hook

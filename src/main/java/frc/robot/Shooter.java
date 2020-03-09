@@ -17,12 +17,12 @@ public class Shooter
 
     public void charge(double val)
     {
-        blue.set(val);
+        big.set(-val);
     }
 
 
     public void fire(double val)
     {
-        big.set(val);
+        blue.set(-val);
     }
 }

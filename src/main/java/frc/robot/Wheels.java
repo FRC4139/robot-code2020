@@ -19,6 +19,7 @@ public class Wheels {
         backLeft = new WPI_TalonSRX(bL);
         frontRight = new WPI_TalonSRX(fR);
         backRight = new WPI_TalonSRX(bR);
+       
         inverseState = false;
         //frontLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
         //backRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
@@ -53,6 +54,7 @@ public class Wheels {
             backLeft.set(leftSpeed);
             frontRight.set(-rightSpeed);
             backRight.set(-rightSpeed);
+
         }
         else
         {
@@ -62,6 +64,7 @@ public class Wheels {
             backLeft.set(-leftSpeed);
             frontRight.set(rightSpeed);
             backRight.set(rightSpeed);
+       
         }
     }
     public void inverse()

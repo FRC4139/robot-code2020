@@ -64,6 +64,7 @@ public class Controller{
         //visionParam = ;
         //vision = new Vision(visionParam);
 
+
         dioOne = new DigitalInput(0);
         dioTwo = new DigitalInput(1);
 
@@ -157,20 +158,26 @@ public class Controller{
             }
         }
 
-        /*
+
         if (xcontroller.getBButtonReleased()) {
             hook.stop();
         }
-        */
-      
+     
         
 
-        //1st controller left bumper; hook down
-        if(xcontroller.getXButtonPressed())
-        {
-            intake.drive(.85);
+        
+        if(xcontroller.getBumperPressed(Hand.kLeft))
+            intake.drive(0.85);
         }
-        if(xcontroller.getXButtonReleased())
+        if(xcontroller.getBumperReleased(Hand.kLeft))
+        {
+            intake.drive(0);
+        }
+  
+        if(xcontroller.getBumperPressed(Hand.kRight))
+            intake.drive(-0.85);
+        }
+        if(xcontroller.getBumperReleased(Hand.kRight))
         {
             intake.drive(0);
         }
