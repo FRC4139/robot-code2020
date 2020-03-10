@@ -45,6 +45,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    //System.out.println(SmartDashboard.getData("Auto Choices")
     //controller1 = new XboxController(0);
     //controller2 = new XboxController(1);
 

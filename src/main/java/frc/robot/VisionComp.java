@@ -14,7 +14,7 @@ public class VisionComp
     
     public void compute(int signal)
     {
-        if (signal == 2) {
+        if (signal == 3) {
             controll.drive(0,0);
         }
 

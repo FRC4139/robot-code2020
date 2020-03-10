@@ -1,4 +1,5 @@
 package frc.robot;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -8,6 +9,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.Timer;
 public class Controller{
     // THE VALUES FOR THE DOUBLES BELOW NEED TO BE CONFIGURED MANUALLY
 
@@ -70,7 +72,7 @@ public class Controller{
 
         intake = new Intake(2);
 
-        hook = new HookExtension(11);
+        hook = new HookExtension(9, 10);
 
         colorWheel = new ColorWheel(5, colorSensor);
 
@@ -103,6 +105,7 @@ public class Controller{
         SmartDashboard.putString("gdata", desiredColor);
         SmartDashboard.putNumber("ultra sonic reading", getUltraSonicReading());
         SmartDashboard.putNumber("angle facing", getAngleFacing());
+        
         wheels.drive(xcontroller.getY(Hand.kLeft), xcontroller.getY(Hand.kRight));
         
         if (xcontroller.getAButtonPressed() || colorWheel.spinNextFrame)
@@ -206,31 +209,171 @@ public class Controller{
 
         }
 
+    private int autoSegment = 0;
+    
+    private Timer timer;
+    private Timer timerTwo;
 
     public void UpdateAutonomous() {
+        // code for all situations - DO NOT COMMENT OUT
+        SmartDashboard.putNumber("Front Left Encoder Distance Travelled (ft)", getDistanceTravelled("fL"));
+        SmartDashboard.putNumber("Back Right Encoder Distance Travelled (ft)", getDistanceTravelled("bR"));
+        SmartDashboard.putNumber("Angle Facing From Gyro (degrees)", getAngleFacing());
+        SmartDashboard.putNumber("Segment", autoSegment);
+
+        // case 1 (right in front of target) POSITION SO BACK OF ROBOT IS TOUCHING LINE. MOVE FORWARD ONE FOOT AND SHOOT
+
+            if (getDistanceTravelled("fL") <= 1 && autoSegment == 0) {
+                wheels.drive(0.7, 0.7);
+                shooter.charge(0.8);
+            } else if (autoSegment == 1) {
+                wheels.drive(0, 0);
+                shooter.charge(0.8); // big
+                
+                if (timer.get() == 0) {
+                    timer.start();
+                }
+                
+                if (timer.get() < 1 && timer.get() > 0.5) {
+                    shooter.fire(-0.4);
+                } else if (timer.get() > 2 && timer.get() < 2.5) {
+                    shooter.fire(-0.4);
+                } else if (timer.get() > 3.5 && timer.get() < 4) {
+                    shooter.fire(-0.4);
+                } else if (timer.get() > 4) {
+                    shooter.fire(0);
+                    shooter.charge(0);
+                    intake.drive(0);
+                } else {
+                    shooter.fire(0);
+                    intake.drive(0.85);
+                }
+                
+            } else {
+                wheels.drive(0, 0);
+                autoSegment++;
+            }
+            
         
+            // case 2 (on the side closer to target) POSITION SO FRONT OF ROBOT IS TOUCHING LINE. MAKE SURE ROBOT IS FACING STRAIGHT AHEAD. IT WILL DRIVE BACK AND PICK UP 3 BALLS 
+        /*
+            if (autoSegment == 0) {
+            if (Math.abs(getAngleFacing()) < 15) {
+                wheels.drive(-.7,.7); //turn left
+            } else {
+                wheels.drive(0,0);
+                autoSegment++;
+            }
+        } else if (autoSegment == 1 && timer.get() < 5) {
+            wheels.drive(0,0);
+            if (timer.get() == 0) {
+                timer.start();
+            }
+            //shoot the three pre loaded balls
+            if (timer.get() < 1 && timer.get() > 0.5) {
+                shooter.fire(-0.4);
+            } else if (timer.get() > 2 && timer.get() < 2.5) {
+                shooter.fire(-0.4);
+            } else if (timer.get() > 3.5 && timer.get() < 4) {
+                shooter.fire(-0.4);
+            } else if (timer.get() > 4) {
+                shooter.fire(0);
+                shooter.charge(0);
+                autoSegment++;
+                intake.drive(0);
+            } else {
+                shooter.fire(0);
+                intake.drive(0.85);
+            }
+        } else if (autoSegment == 2) {
+            if (Math.abs(getAngleFacing()) > 1) {
+                wheels.drive(0.7,-0.7); //turn right
+            } else {
+                wheels.drive(0, 0);
+                autoSegment++;
+            }
+        } else if (autoSegment == 3) {
+            wheels.resetRotations();
+            autoSegment++;
+        } else if (autoSegment == 4) {
+            //BACK 10 FT
+            if (Math.abs(getDistanceTravelled("fL")) < 10) {
+                wheels.drive(-0.5, -0.5);
+                intake.drive(0.85);
+            } else {
+                wheels.drive(0, 0);
+                intake.drive(0);
+                autoSegment++;
+            }
+        } else if (autoSegment == 5) {
+            wheels.resetRotations();
+            autoSegment++;
+        } else if (autoSegment == 6) {
+            //FORWARD 10 FT
+            if (Math.abs(getDistanceTravelled("fL")) < 10) {
+                wheels.drive(0.7, 0.7);
+                intake.drive(0.85);
+            } else {
+                wheels.drive(0, 0);
+                intake.drive(0);
+                autoSegment++;
+            }
+        } else if (autoSegment == 7) {
+            if (Math.abs(getAngleFacing()) < 15) {
+                wheels.drive(-.7,.7); //turn left
+            } else {
+                wheels.drive(0,0);
+                autoSegment++;
+            }
+        } else if (autoSegment == 8 && timer.get() < 5) {
+            wheels.drive(0,0);
+            if (timerTwo.get() == 0) {
+                timerTwo.start();
+            }
+            //shoot the three pre loaded balls
+            if (timerTwo.get() < 1 && timerTwo.get() > 0.5) {
+                shooter.fire(-0.4);
+            } else if (timerTwo.get() > 2 && timerTwo.get() < 2.5) {
+                shooter.fire(-0.4);
+            } else if (timerTwo.get() > 3.5 && timerTwo.get() < 4) {
+                shooter.fire(-0.4);
+            } else if (timerTwo.get() > 4) {
+                shooter.fire(0);
+                shooter.charge(0);
+                autoSegment++;
+                intake.drive(0);
+            } else {
+                shooter.fire(0);
+                intake.drive(0.85);
+            }
+        }
+        */
+        
+        // case 3 (furthest from the target)
     }
 
-    public void AutonomousTurnCheck() {
+    public int AutonomousTurnCheck() {
         if (!dioOne.get() && !dioTwo.get()) {
             visionComp.compute(2); // straight
-            return;
+            return 2;
         }
         
         if (!dioOne.get()) {
             visionComp.compute(0); // left
-            return;
+            return 0;
         }
         if (!dioTwo.get()) {
             visionComp.compute(1); //  right
-            return;
+            return 1;
         } 
 
         if (dioOne.get() && dioTwo.get()) 
         {
             visionComp.compute(3); // none
-            return;
+            return 3;
         }
+
+        return -1; 
     }
 
     public double getUltraSonicReading()
@@ -243,4 +386,8 @@ public class Controller{
         return ahrs.getAngle();
     }
     
+    public double getDistanceTravelled(String pos) {
+        // return                  rotations * 2 * pi * r * (1 foot / 12 inches)
+        return wheels.getRotations(pos) * 2 * 3.1415926535 * 3 / 12;
+    }
 }

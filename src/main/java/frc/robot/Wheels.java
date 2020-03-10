@@ -1,5 +1,6 @@
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 //import com.ctre.phoenix.motorcontrol.ControlMode;
 //import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 //import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -21,8 +22,8 @@ public class Wheels {
         backRight = new WPI_TalonSRX(bR);
        
         inverseState = false;
-        //frontLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-        //backRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+        frontLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+        backRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
         //wheels = new DifferentialDrive(new SpeedControllerGroup(frontLeft, backLeft), new SpeedControllerGroup(frontRight, backRight));
     }
 
@@ -42,6 +43,10 @@ public class Wheels {
 
     }
 
+    public void resetRotations() {
+        frontLeft.setSelectedSensorPosition(0);
+        backRight.setSelectedSensorPosition(0);
+    }
     // Negative speed turns wheels backwards
     public void drive(double leftSpeed, double rightSpeed) {
 
