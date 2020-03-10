@@ -7,36 +7,55 @@ import edu.wpi.first.wpilibj.DriverStation;
 import java.lang.Math;
 
 public class AutonomousTop{
-    public int segment = 1;
-
-    public void Main(Controller args, Wheels wheels, Shooter shooter){ //each revolution is 6pi inches
-        double angleFacing = args.GetAngleFacing();
+    public int segment = 0;
+    public static final double inchesToHoopLeft = 141.59;
+    
+    public void hi(Controller contr, Wheels wheels, Shooter shooter){ //each revolution is 6pi inches
+        double angleFacing = contr.getAngleFacing();
         double frontLeftRotations = wheels.getRotations("fL");
         double backLeftRotations = wheels.getRotations("bR");
         
         /* LEFT */
-            
-        if(frontLeftRotations < 1 && backLeftRotations < 1 && segment == 1){ //forward
+        switch(segment){
+            case 0:
+                wheels.drive(.5, .5);
+                segment++;
+                break;
+            case 1:
+                if(wheels.getRotations("fL") >= 1){
+                    wheels.drive(-.5, -.5);
+                    segment++;
+                }
+                break;
+            case 2:
+                if(wheels.getRotations("fL") <= 0){
+                    wheels.drive(.5, -.5);
+                    segment++;
+                }
+                break;
+            case 3:
+                if(contr.getAngleFacing() >= 90){
+                    wheels.resetRotations();
+                    wheels.drive(.5, .5);
+                    segment++;
+                }
+                break;
+            case 4:
+                if(wheels.getRotations("fL") >= inchesToHoopLeft/(6*Math.PI)){
+                    wheels.drive(-.5, .5);
+                    segment++;
+                }
+                break;
+            case 5:
+                if(contr.getAngleFacing() <= 0){
+                    wheels.drive(0, 0);
+                    shooter.charge(.6);
+                    shooter.fire();
+                }
+        }
+        while(frontLeftRotations < inchesToHoopLeft/(6*Math.PI)){ //forward
             wheels.drive(.5, .5);
         }
-        if(frontLeftRotations > -1 && backLeftRotations > -1 && segment == 1){ //forward
-            wheels.drive(-.5, -.5);
-            return;
-        }
-        if(angleFacing<90 && segment == 1){ //turn right
-            wheels.drive(.5, -.5);
-            return;
-        }
-        if (angleFacing >= 90 && segment == 1) { //resetting encoder values and starting segment 2
-            wheels.resetRotations();
-            segment++;
-            return;
-        }
-        if(frontLeftRotations < 7.51158279746 && backLeftRotations < 7.51158279746 && segment == 2){ //forward
-            wheels.drive(.5, .5);
-            return;
-        }
-        
         if(angleFacing>-90){ // turning left
             wheels.drive(-.5, .5);
             return;
