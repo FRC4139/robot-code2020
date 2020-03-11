@@ -252,6 +252,7 @@ public class Controller{
                 shooter.fire(0);
                 shooter.charge(0);
                 intake.drive(0);
+                autoSegment++;
             } else {
                 shooter.fire(0);
                 intake.drive(0.85);
@@ -259,7 +260,7 @@ public class Controller{
             
         }
 
-        // ALL THE CODE BELOW REQUIRES ULTRASONIC SENSOR
+        // THE CODE SEGMENT BELOW REQUIRES ULTRASONIC SENSOR
         /*
         if (autoSegment == 0) {
             if (getUltraSonicReading() > 100) {
@@ -285,6 +286,7 @@ public class Controller{
                 shooter.fire(0);
                 shooter.charge(0);
                 intake.drive(0);
+                autoSegment++;
             } else {
                 shooter.fire(0);
                 intake.drive(0.85);
@@ -293,7 +295,7 @@ public class Controller{
         }
         
 
-        //ALL THE CODE BELOW REQUIRES ENCODERS
+        //ALL THE CODE BELOW REQUIRES ENCODERS (CASES 1 + 2)
         /*
         // case 1 (right in front of target) POSITION SO BACK OF ROBOT IS TOUCHING LINE. MOVE FORWARD ONE FOOT AND SHOOT
 
