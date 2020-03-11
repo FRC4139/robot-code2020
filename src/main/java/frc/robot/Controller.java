@@ -219,8 +219,82 @@ public class Controller{
         SmartDashboard.putNumber("Front Left Encoder Distance Travelled (ft)", getDistanceTravelled("fL"));
         SmartDashboard.putNumber("Back Right Encoder Distance Travelled (ft)", getDistanceTravelled("bR"));
         SmartDashboard.putNumber("Angle Facing From Gyro (degrees)", getAngleFacing());
+        SmartDashboard.putNumber("Ultrasonic Reading (feet):", getUltraSonicReading() / 12);
         SmartDashboard.putNumber("Segment", autoSegment);
 
+        //MAKE SURE NO ERRORS ARE PRESENT AFTER COMMENTING OUT LINES
+
+        // THE FOLLOWING SEGMENT OF CODE CAN BE RUN WITHOUT ANY SENSORS (Move forward 1 sec, shoot)
+        if (autoSegment == 0) {
+            timerTwo.start();
+            autoSegment++;
+        } else if (autoSegment == 1) {
+            if (timerTwo.get() < 1) {
+                wheels.drive(0.7, 0.7);
+                shooter.charge(0.8);
+            } else {
+                wheels.drive (0, 0);
+                timer.start();
+                autoSegment++;
+            }
+        } else if (autoSegment == 2) {
+            wheels.drive(0, 0);
+            shooter.charge(0.8); // big
+            
+            
+            if (timer.get() < 1 && timer.get() > 0.5) {
+                shooter.fire(-0.4);
+            } else if (timer.get() > 2 && timer.get() < 2.5) {
+                shooter.fire(-0.4);
+            } else if (timer.get() > 3.5 && timer.get() < 4) {
+                shooter.fire(-0.4);
+            } else if (timer.get() > 4) {
+                shooter.fire(0);
+                shooter.charge(0);
+                intake.drive(0);
+            } else {
+                shooter.fire(0);
+                intake.drive(0.85);
+            }
+            
+        }
+
+        // ALL THE CODE BELOW REQUIRES ULTRASONIC SENSOR
+        /*
+        if (autoSegment == 0) {
+            if (getUltraSonicReading() > 100) {
+                wheels.drive(0.7, 0.7);
+                shooter.charge(0.8); // big
+            } else if (getUltraSonicReading() < 100) {
+                wheels.drive(0, 0);
+                timer.start();
+                autoSegment++;
+            } 
+        } else if (autoSegment == 1) {
+            wheels.drive(0, 0);
+            shooter.charge(0.8); // big
+            
+            
+            if (timer.get() < 1 && timer.get() > 0.5) {
+                shooter.fire(-0.4);
+            } else if (timer.get() > 2 && timer.get() < 2.5) {
+                shooter.fire(-0.4);
+            } else if (timer.get() > 3.5 && timer.get() < 4) {
+                shooter.fire(-0.4);
+            } else if (timer.get() > 4) {
+                shooter.fire(0);
+                shooter.charge(0);
+                intake.drive(0);
+            } else {
+                shooter.fire(0);
+                intake.drive(0.85);
+            }
+            
+        }
+        
+
+        //ALL THE CODE BELOW REQUIRES ENCODERS
+        /*
         // case 1 (right in front of target) POSITION SO BACK OF ROBOT IS TOUCHING LINE. MOVE FORWARD ONE FOOT AND SHOOT
 
             if (getDistanceTravelled("fL") <= 1 && autoSegment == 0) {
@@ -349,7 +423,7 @@ public class Controller{
         }
         */
         
-        // case 3 (furthest from the target)
+        
     }
 
     public int AutonomousTurnCheck() {
